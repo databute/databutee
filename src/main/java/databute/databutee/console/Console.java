@@ -1,6 +1,10 @@
 package databute.databutee.console;
 
+import databute.databutee.Databutee;
+import databute.databutee.DatabuteeConfiguration;
 import databute.databutee.DatabuteeConstants;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.lang3.StringUtils;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -17,6 +21,8 @@ import java.util.stream.Collectors;
 public final class Console {
 
     private static Console instance;
+
+    private Databutee databutee;
 
     private final Terminal terminal;
     private final LineReader reader;
@@ -36,6 +42,11 @@ public final class Console {
             if (StringUtils.equalsAny(parsedLine.word(), "quit", "exit")) {
                 break;
             } else if (StringUtils.equals(parsedLine.word(), "connect")) {
+                if (databutee != null) {
+                    terminal.writer().println("already connected.");
+                    continue;
+                }
+
                 final List<InetSocketAddress> addresses = parsedLine.words().subList(1, parsedLine.words().size())
                         .stream()
                         .map(address -> {
@@ -50,7 +61,18 @@ public final class Console {
                             }
                         })
                         .collect(Collectors.toList());
-                terminal.writer().println("addresses = " + addresses);
+                databutee = new Databutee(new DatabuteeConfiguration() {
+                    @Override
+                    public EventLoopGroup loopGroup() {
+                        return new NioEventLoopGroup();
+                    }
+
+                    @Override
+                    public List<InetSocketAddress> addresses() {
+                        return addresses;
+                    }
+                });
+                databutee.connect().join();
             }
         }
     }
