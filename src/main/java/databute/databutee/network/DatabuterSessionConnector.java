@@ -1,5 +1,14 @@
 package databute.databutee.network;
 
+import com.google.common.collect.Maps;
+import databute.databutee.network.message.MessageCode;
+import databute.databutee.network.message.MessageCodeResolver;
+import databute.databutee.network.message.MessageDeserializer;
+import databute.databutee.network.message.MessageSerializer;
+import databute.databutee.network.message.codec.MessageToPacketEncoder;
+import databute.databutee.network.message.codec.PacketToMessageDecoder;
+import databute.databutee.network.packet.codec.ByteToPacketDecoder;
+import databute.databutee.network.packet.codec.PacketToByteEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -9,6 +18,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -20,9 +30,17 @@ public class DatabuterSessionConnector {
     private InetSocketAddress remoteAddress;
 
     private final EventLoopGroup loopGroup;
+    private final MessageCodeResolver resolver;
+    private final Map<MessageCode, MessageSerializer> serializers;
+    private final Map<MessageCode, MessageDeserializer> deserializers;
 
     public DatabuterSessionConnector(EventLoopGroup loopGroup) {
         this.loopGroup = checkNotNull(loopGroup, "loopGroup");
+        this.resolver = new MessageCodeResolver();
+
+        this.serializers = Maps.newHashMap();
+
+        this.deserializers = Maps.newHashMap();
     }
 
     public CompletableFuture<Void> connect(InetSocketAddress remoteAddress) {
@@ -36,6 +54,12 @@ public class DatabuterSessionConnector {
                     @Override
                     protected void initChannel(SocketChannel channel) {
                         final ChannelPipeline pipeline = channel.pipeline();
+
+                        pipeline.addLast(new PacketToByteEncoder());
+                        pipeline.addLast(new ByteToPacketDecoder());
+
+                        pipeline.addLast(new MessageToPacketEncoder(serializers));
+                        pipeline.addLast(new PacketToMessageDecoder(resolver, deserializers));
 
                         pipeline.addLast(new DatabuterChannelHandler());
                     }

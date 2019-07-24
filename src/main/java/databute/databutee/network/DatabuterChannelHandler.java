@@ -10,15 +10,17 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabuterChannelHandler.class);
 
+    private DatabuterSession session;
+
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         final SocketChannel channel = (SocketChannel) ctx.channel();
-        logger.debug("Active new channel {}", channel);
+        session = new DatabuterSession(channel);
+        logger.debug("Active new databuter session {}", session);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        final SocketChannel channel = (SocketChannel) ctx.channel();
-        logger.debug("Inactive channel {}", channel);
+    public void channelInactive(ChannelHandlerContext ctx) {
+        logger.debug("Inactive databuter session {}", session);
     }
 }
