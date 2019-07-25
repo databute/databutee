@@ -14,6 +14,7 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,18 +62,25 @@ public final class Console {
                             }
                         })
                         .collect(Collectors.toList());
-                databutee = new Databutee(new DatabuteeConfiguration() {
-                    @Override
-                    public EventLoopGroup loopGroup() {
-                        return new NioEventLoopGroup();
-                    }
 
-                    @Override
-                    public List<InetSocketAddress> addresses() {
-                        return addresses;
-                    }
-                });
-                databutee.connect().join();
+                try {
+                    databutee = new Databutee(new DatabuteeConfiguration() {
+                        @Override
+                        public EventLoopGroup loopGroup() {
+                            return new NioEventLoopGroup();
+                        }
+
+                        @Override
+                        public List<InetSocketAddress> addresses() {
+                            return addresses;
+                        }
+                    });
+                    databutee.connect();
+                } catch (ConnectException e) {
+                    terminal.writer().println("Failed to connect to " + addresses);
+
+                    databutee = null;
+                }
             }
         }
     }

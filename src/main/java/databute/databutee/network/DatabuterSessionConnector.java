@@ -43,6 +43,10 @@ public class DatabuterSessionConnector {
         this.deserializers = Maps.newHashMap();
     }
 
+    public InetSocketAddress remoteAddress() {
+        return remoteAddress;
+    }
+
     public CompletableFuture<Void> connect(InetSocketAddress remoteAddress) {
         this.remoteAddress = checkNotNull(remoteAddress, "remoteAddress");
 
