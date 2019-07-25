@@ -49,10 +49,10 @@ public class DatabuterSessionConnector {
         return remoteAddress;
     }
 
-    public CompletableFuture<Void> connect(InetSocketAddress remoteAddress) {
+    public CompletableFuture<DatabuterSession> connect(InetSocketAddress remoteAddress) {
         this.remoteAddress = checkNotNull(remoteAddress, "remoteAddress");
 
-        final CompletableFuture<Void> future = new CompletableFuture<>();
+        final CompletableFuture<DatabuterSession> future = new CompletableFuture<>();
         final Bootstrap bootstrap = new Bootstrap()
                 .group(loopGroup)
                 .channel(NioSocketChannel.class)
@@ -67,7 +67,7 @@ public class DatabuterSessionConnector {
                         pipeline.addLast(new MessageToPacketEncoder(serializers));
                         pipeline.addLast(new PacketToMessageDecoder(resolver, deserializers));
 
-                        pipeline.addLast(new DatabuterChannelHandler());
+                        pipeline.addLast(new DatabuterChannelHandler(future));
                     }
                 });
         bootstrap.connect(remoteAddress).addListener((ChannelFutureListener) channelFuture -> {
@@ -77,8 +77,6 @@ public class DatabuterSessionConnector {
                     DatabuterSessionConnector.this.channel = channel;
                     DatabuterSessionConnector.this.localAddress = channel.localAddress();
                     DatabuterSessionConnector.this.remoteAddress = channel.remoteAddress();
-
-                    future.complete(null);
                 } catch (Exception e) {
                     future.completeExceptionally(e);
                 }
