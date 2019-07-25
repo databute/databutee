@@ -1,6 +1,7 @@
 package databute.databutee.network;
 
 import databute.databutee.cluster.add.AddClusterNodeMessageHandler;
+import databute.databutee.cluster.remove.RemoveClusterNodeMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
@@ -38,6 +39,7 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
         final ChannelPipeline pipeline = ctx.pipeline();
 
         pipeline.addLast(new AddClusterNodeMessageHandler(session));
+        pipeline.addLast(new RemoveClusterNodeMessageHandler(session));
     }
 
     @Override

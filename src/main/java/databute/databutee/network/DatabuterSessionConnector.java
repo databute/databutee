@@ -2,6 +2,7 @@ package databute.databutee.network;
 
 import com.google.common.collect.Maps;
 import databute.databutee.cluster.add.AddClusterNodeMessageDeserializer;
+import databute.databutee.cluster.remove.RemoveClusterNodeMessageDeserializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -45,6 +46,7 @@ public class DatabuterSessionConnector {
 
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.ADD_CLUSTER_NODE, new AddClusterNodeMessageDeserializer());
+        this.deserializers.put(MessageCode.REMOVE_CLUSTER_NODE, new RemoveClusterNodeMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {
