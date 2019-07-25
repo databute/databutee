@@ -1,11 +1,23 @@
 package databute.databutee.network.message;
 
 import databute.databutee.network.DatabuterSession;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
-public interface MessageHandler<S extends DatabuterSession, M extends Message> {
+import static com.google.common.base.Preconditions.checkNotNull;
 
-    S session();
+public abstract class MessageHandler<M extends Message> extends SimpleChannelInboundHandler<M> {
 
-    void handle(M message);
+    private final DatabuterSession session;
 
+    protected MessageHandler(DatabuterSession session) {
+        this.session = checkNotNull(session, "session");
+    }
+
+    public abstract void handle(M message);
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, M message) {
+        handle(message);
+    }
 }
