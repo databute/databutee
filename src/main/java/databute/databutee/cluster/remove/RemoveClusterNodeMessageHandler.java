@@ -16,5 +16,7 @@ public class RemoveClusterNodeMessageHandler extends MessageHandler<RemoveCluste
     @Override
     public void handle(RemoveClusterNodeMessage removeClusterNodeMessage) {
         logger.debug("Handling remove cluster node message {}", removeClusterNodeMessage);
+
+        session().databutee().databuterNodeGroup().remove(removeClusterNodeMessage.id());
     }
 }

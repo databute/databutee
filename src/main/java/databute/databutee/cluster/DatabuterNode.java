@@ -4,6 +4,10 @@ import com.google.common.base.MoreObjects;
 
 public class DatabuterNode {
 
+    public static DatabuterNode.Builder builder() {
+        return new DatabuterNode.Builder();
+    }
+
     private final String id;
     private final String address;
     private final int port;
@@ -33,5 +37,35 @@ public class DatabuterNode {
                 .add("address", address)
                 .add("port", port)
                 .toString();
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String address;
+        private int port;
+
+        private Builder() {
+
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder port(int port) {
+            this.port = port;
+            return this;
+        }
+
+        public DatabuterNode build() {
+            return new DatabuterNode(id, address, port);
+        }
     }
 }

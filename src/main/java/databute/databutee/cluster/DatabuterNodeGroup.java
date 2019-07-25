@@ -33,10 +33,6 @@ public class DatabuterNodeGroup {
         return added;
     }
 
-    public boolean remove(DatabuterNode node) {
-        return remove(checkNotNull(node, "node").id());
-    }
-
     public boolean remove(String id) {
         checkNotNull(id, "id");
 
