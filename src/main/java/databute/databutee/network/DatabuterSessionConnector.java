@@ -9,6 +9,7 @@ import databute.databutee.network.message.codec.MessageToPacketEncoder;
 import databute.databutee.network.message.codec.PacketToMessageDecoder;
 import databute.databutee.network.packet.codec.ByteToPacketDecoder;
 import databute.databutee.network.packet.codec.PacketToByteEncoder;
+import databute.databutee.network.register.RegisterMessageSerializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -39,6 +40,7 @@ public class DatabuterSessionConnector {
         this.resolver = new MessageCodeResolver();
 
         this.serializers = Maps.newHashMap();
+        this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
     }
