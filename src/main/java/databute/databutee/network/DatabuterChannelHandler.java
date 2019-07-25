@@ -1,7 +1,9 @@
 package databute.databutee.network;
 
+import databute.databutee.cluster.add.AddClusterNodeMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,14 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
         session = new DatabuterSession(channel);
         connectFuture.complete(session);
         logger.debug("Active new databuter session {}", session);
+
+        configurePipeline(ctx);
+    }
+
+    private void configurePipeline(ChannelHandlerContext ctx) {
+        final ChannelPipeline pipeline = ctx.pipeline();
+
+        pipeline.addLast(new AddClusterNodeMessageHandler(session));
     }
 
     @Override
