@@ -1,6 +1,7 @@
 package databute.databutee.network;
 
 import com.google.common.base.MoreObjects;
+import databute.databutee.Databutee;
 import databute.databutee.network.message.Message;
 import io.netty.channel.socket.SocketChannel;
 
@@ -11,14 +12,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DatabuterSession {
 
+    private final Databutee databutee;
     private final SocketChannel channel;
     private final InetSocketAddress localAddress;
     private final InetSocketAddress remoteAddress;
 
-    public DatabuterSession(SocketChannel channel) {
+    public DatabuterSession(Databutee databutee, SocketChannel channel) {
+        this.databutee = checkNotNull(databutee, "databutee");
         this.channel = checkNotNull(channel, "channel");
         this.localAddress = checkNotNull(channel.localAddress(), "localAddress");
         this.remoteAddress = checkNotNull(channel.remoteAddress(), "remoteAddress");
+    }
+
+    public Databutee databutee() {
+        return databutee;
     }
 
     public CompletableFuture<Void> send(Message message) {

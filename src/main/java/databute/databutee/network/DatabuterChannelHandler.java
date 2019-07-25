@@ -1,5 +1,6 @@
 package databute.databutee.network;
 
+import databute.databutee.Databutee;
 import databute.databutee.cluster.add.AddClusterNodeMessageHandler;
 import databute.databutee.cluster.remove.RemoveClusterNodeMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,16 +20,18 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
 
     private DatabuterSession session;
 
+    private final Databutee databutee;
     private final CompletableFuture<DatabuterSession> connectFuture;
 
-    public DatabuterChannelHandler(CompletableFuture<DatabuterSession> connectFuture) {
+    public DatabuterChannelHandler(Databutee databutee, CompletableFuture<DatabuterSession> connectFuture) {
+        this.databutee = databutee;
         this.connectFuture = checkNotNull(connectFuture, "connectFuture");
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         final SocketChannel channel = (SocketChannel) ctx.channel();
-        session = new DatabuterSession(channel);
+        session = new DatabuterSession(databutee, channel);
         connectFuture.complete(session);
         logger.debug("Active new databuter session {}", session);
 

@@ -22,7 +22,6 @@ public class Databutee {
     private static final Logger logger = LoggerFactory.getLogger(Databutee.class);
 
     private final DatabuteeConfiguration configuration;
-
     private final DatabuterNodeGroup databuterNodeGroup;
 
     public Databutee(DatabuteeConfiguration configuration) {
@@ -39,7 +38,7 @@ public class Databutee {
         while (!addresses.isEmpty()) {
             final int index = RandomUtils.nextInt(0, addresses.size());
             final InetSocketAddress address = addresses.remove(index);
-            final DatabuterSessionConnector connector = new DatabuterSessionConnector(configuration.loopGroup());
+            final DatabuterSessionConnector connector = new DatabuterSessionConnector(this, configuration.loopGroup());
 
             try {
                 final DatabuterSession session = connector.connect(address).get();
