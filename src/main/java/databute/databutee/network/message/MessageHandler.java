@@ -16,6 +16,10 @@ public abstract class MessageHandler<M extends Message> extends SimpleChannelInb
 
     public abstract void handle(M message);
 
+    public final DatabuterSession session() {
+        return session;
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, M message) {
         handle(message);

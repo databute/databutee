@@ -1,6 +1,7 @@
 package databute.databutee.network;
 
 import com.google.common.collect.Maps;
+import databute.databutee.Databutee;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -10,6 +11,8 @@ import databute.databutee.network.message.codec.PacketToMessageDecoder;
 import databute.databutee.network.packet.codec.ByteToPacketDecoder;
 import databute.databutee.network.packet.codec.PacketToByteEncoder;
 import databute.databutee.network.register.RegisterMessageSerializer;
+import databute.databutee.node.add.AddClusterNodeMessageDeserializer;
+import databute.databutee.node.remove.RemoveClusterNodeMessageDeserializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -30,12 +33,14 @@ public class DatabuterSessionConnector {
     private InetSocketAddress localAddress;
     private InetSocketAddress remoteAddress;
 
+    private final Databutee databutee;
     private final EventLoopGroup loopGroup;
     private final MessageCodeResolver resolver;
     private final Map<MessageCode, MessageSerializer> serializers;
     private final Map<MessageCode, MessageDeserializer> deserializers;
 
-    public DatabuterSessionConnector(EventLoopGroup loopGroup) {
+    public DatabuterSessionConnector(Databutee databutee, EventLoopGroup loopGroup) {
+        this.databutee = checkNotNull(databutee, "databutee");
         this.loopGroup = checkNotNull(loopGroup, "loopGroup");
         this.resolver = new MessageCodeResolver();
 
@@ -43,6 +48,8 @@ public class DatabuterSessionConnector {
         this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
+        this.deserializers.put(MessageCode.ADD_CLUSTER_NODE, new AddClusterNodeMessageDeserializer());
+        this.deserializers.put(MessageCode.REMOVE_CLUSTER_NODE, new RemoveClusterNodeMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {
@@ -67,7 +74,7 @@ public class DatabuterSessionConnector {
                         pipeline.addLast(new MessageToPacketEncoder(serializers));
                         pipeline.addLast(new PacketToMessageDecoder(resolver, deserializers));
 
-                        pipeline.addLast(new DatabuterChannelHandler(future));
+                        pipeline.addLast(new DatabuterChannelHandler(databutee, future));
                     }
                 });
         bootstrap.connect(remoteAddress).addListener((ChannelFutureListener) channelFuture -> {

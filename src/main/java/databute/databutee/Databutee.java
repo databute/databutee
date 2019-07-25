@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.register.RegisterMessage;
+import databute.databutee.node.DatabuterNodeGroup;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,15 @@ public class Databutee {
     private static final Logger logger = LoggerFactory.getLogger(Databutee.class);
 
     private final DatabuteeConfiguration configuration;
+    private final DatabuterNodeGroup databuterNodeGroup;
 
     public Databutee(DatabuteeConfiguration configuration) {
         this.configuration = checkNotNull(configuration, "configuration");
+        this.databuterNodeGroup = new DatabuterNodeGroup();
+    }
+
+    public DatabuterNodeGroup databuterNodeGroup() {
+        return databuterNodeGroup;
     }
 
     public void connect() throws ConnectException {
@@ -31,7 +38,7 @@ public class Databutee {
         while (!addresses.isEmpty()) {
             final int index = RandomUtils.nextInt(0, addresses.size());
             final InetSocketAddress address = addresses.remove(index);
-            final DatabuterSessionConnector connector = new DatabuterSessionConnector(configuration.loopGroup());
+            final DatabuterSessionConnector connector = new DatabuterSessionConnector(this, configuration.loopGroup());
 
             try {
                 final DatabuterSession session = connector.connect(address).get();
@@ -51,6 +58,7 @@ public class Databutee {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("configuration", configuration)
+                .add("databuterNodeGroup", databuterNodeGroup)
                 .toString();
     }
 }
