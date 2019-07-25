@@ -2,7 +2,9 @@ package databute.databutee;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
+import databute.databutee.network.register.RegisterMessage;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.util.List;
-import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,10 +34,12 @@ public class Databutee {
             final DatabuterSessionConnector connector = new DatabuterSessionConnector(configuration.loopGroup());
 
             try {
-                connector.connect(address).join();
+                final DatabuterSession session = connector.connect(address).get();
                 logger.info("Connected with server at {}", connector.remoteAddress());
+
+                session.send(new RegisterMessage());
                 return;
-            } catch (CompletionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 logger.error("Failed to connect to {}.", address);
             }
         }

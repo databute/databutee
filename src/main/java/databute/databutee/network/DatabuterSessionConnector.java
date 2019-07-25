@@ -9,6 +9,7 @@ import databute.databutee.network.message.codec.MessageToPacketEncoder;
 import databute.databutee.network.message.codec.PacketToMessageDecoder;
 import databute.databutee.network.packet.codec.ByteToPacketDecoder;
 import databute.databutee.network.packet.codec.PacketToByteEncoder;
+import databute.databutee.network.register.RegisterMessageSerializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -39,6 +40,7 @@ public class DatabuterSessionConnector {
         this.resolver = new MessageCodeResolver();
 
         this.serializers = Maps.newHashMap();
+        this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
     }
@@ -47,10 +49,10 @@ public class DatabuterSessionConnector {
         return remoteAddress;
     }
 
-    public CompletableFuture<Void> connect(InetSocketAddress remoteAddress) {
+    public CompletableFuture<DatabuterSession> connect(InetSocketAddress remoteAddress) {
         this.remoteAddress = checkNotNull(remoteAddress, "remoteAddress");
 
-        final CompletableFuture<Void> future = new CompletableFuture<>();
+        final CompletableFuture<DatabuterSession> future = new CompletableFuture<>();
         final Bootstrap bootstrap = new Bootstrap()
                 .group(loopGroup)
                 .channel(NioSocketChannel.class)
@@ -65,7 +67,7 @@ public class DatabuterSessionConnector {
                         pipeline.addLast(new MessageToPacketEncoder(serializers));
                         pipeline.addLast(new PacketToMessageDecoder(resolver, deserializers));
 
-                        pipeline.addLast(new DatabuterChannelHandler());
+                        pipeline.addLast(new DatabuterChannelHandler(future));
                     }
                 });
         bootstrap.connect(remoteAddress).addListener((ChannelFutureListener) channelFuture -> {
@@ -75,8 +77,6 @@ public class DatabuterSessionConnector {
                     DatabuterSessionConnector.this.channel = channel;
                     DatabuterSessionConnector.this.localAddress = channel.localAddress();
                     DatabuterSessionConnector.this.remoteAddress = channel.remoteAddress();
-
-                    future.complete(null);
                 } catch (Exception e) {
                     future.completeExceptionally(e);
                 }
