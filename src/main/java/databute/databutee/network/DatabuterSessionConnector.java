@@ -2,8 +2,6 @@ package databute.databutee.network;
 
 import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
-import databute.databutee.cluster.add.AddClusterNodeMessageDeserializer;
-import databute.databutee.cluster.remove.RemoveClusterNodeMessageDeserializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -13,6 +11,8 @@ import databute.databutee.network.message.codec.PacketToMessageDecoder;
 import databute.databutee.network.packet.codec.ByteToPacketDecoder;
 import databute.databutee.network.packet.codec.PacketToByteEncoder;
 import databute.databutee.network.register.RegisterMessageSerializer;
+import databute.databutee.node.add.AddClusterNodeMessageDeserializer;
+import databute.databutee.node.remove.RemoveClusterNodeMessageDeserializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;

@@ -1,4 +1,4 @@
-package databute.databutee.cluster.remove;
+package databute.databutee.node.remove;
 
 import databute.databutee.network.message.MessageDeserializer;
 import databute.databutee.network.packet.Packet;

@@ -1,4 +1,4 @@
-package databute.databutee.cluster;
+package databute.databutee.node;
 
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;

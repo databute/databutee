@@ -1,8 +1,8 @@
 package databute.databutee.network;
 
 import databute.databutee.Databutee;
-import databute.databutee.cluster.add.AddClusterNodeMessageHandler;
-import databute.databutee.cluster.remove.RemoveClusterNodeMessageHandler;
+import databute.databutee.node.add.AddClusterNodeMessageHandler;
+import databute.databutee.node.remove.RemoveClusterNodeMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;

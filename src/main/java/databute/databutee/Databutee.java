@@ -2,10 +2,10 @@ package databute.databutee;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
-import databute.databutee.cluster.DatabuterNodeGroup;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.register.RegisterMessage;
+import databute.databutee.node.DatabuterNodeGroup;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

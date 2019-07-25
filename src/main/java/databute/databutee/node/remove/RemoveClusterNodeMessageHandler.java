@@ -1,4 +1,4 @@
-package databute.databutee.cluster.remove;
+package databute.databutee.node.remove;
 
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.message.MessageHandler;
@@ -15,7 +15,7 @@ public class RemoveClusterNodeMessageHandler extends MessageHandler<RemoveCluste
 
     @Override
     public void handle(RemoveClusterNodeMessage removeClusterNodeMessage) {
-        logger.debug("Handling remove cluster node message {}", removeClusterNodeMessage);
+        logger.debug("Handling remove node node message {}", removeClusterNodeMessage);
 
         session().databutee().databuterNodeGroup().remove(removeClusterNodeMessage.id());
     }

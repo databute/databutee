@@ -1,4 +1,4 @@
-package databute.databutee.cluster.add;
+package databute.databutee.node.add;
 
 import databute.databutee.network.message.MessageDeserializer;
 import databute.databutee.network.packet.Packet;

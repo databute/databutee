@@ -1,4 +1,4 @@
-package databute.databutee.cluster.remove;
+package databute.databutee.node.remove;
 
 import com.google.common.base.MoreObjects;
 import databute.databutee.network.message.Message;

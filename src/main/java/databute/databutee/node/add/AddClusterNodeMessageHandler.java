@@ -1,8 +1,8 @@
-package databute.databutee.cluster.add;
+package databute.databutee.node.add;
 
-import databute.databutee.cluster.DatabuterNode;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.message.MessageHandler;
+import databute.databutee.node.DatabuterNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ public class AddClusterNodeMessageHandler extends MessageHandler<AddClusterNodeM
 
     @Override
     public void handle(AddClusterNodeMessage addClusterNodeMessage) {
-        logger.debug("Handling add cluster node messsage {}", addClusterNodeMessage);
+        logger.debug("Handling add node node messsage {}", addClusterNodeMessage);
 
         final DatabuterNode node = DatabuterNode.builder()
                 .id(addClusterNodeMessage.id())
