@@ -8,6 +8,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Bucket {
 
+    private int factor;
     private String activeNodeId;
     private String standbyNodeId;
 
@@ -19,6 +20,15 @@ public class Bucket {
 
     public String id() {
         return id;
+    }
+
+    public int factor() {
+        return factor;
+    }
+
+    public Bucket factor(int factor) {
+        this.factor = factor;
+        return this;
     }
 
     public String activeNodeId() {
@@ -44,6 +54,11 @@ public class Bucket {
 
         boolean updated = false;
 
+        if (factor != bucketNotificationMessage.factor()) {
+            this.factor = bucketNotificationMessage.factor();
+            updated = true;
+        }
+
         if (!StringUtils.equals(activeNodeId, bucketNotificationMessage.activeNodeId())) {
             this.activeNodeId = bucketNotificationMessage.activeNodeId();
             updated = true;
@@ -61,6 +76,7 @@ public class Bucket {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
+                .add("factor", factor)
                 .add("activeNodeId", activeNodeId)
                 .add("standbyNodeId", standbyNodeId)
                 .toString();
