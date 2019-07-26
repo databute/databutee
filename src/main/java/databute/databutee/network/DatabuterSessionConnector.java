@@ -2,8 +2,7 @@ package databute.databutee.network;
 
 import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
-import databute.databutee.bucket.notification.add.BucketAddedNotificationMessageDeserializer;
-import databute.databutee.bucket.notification.update.BucketUpdatedNotificationMessageDeserializer;
+import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -52,8 +51,7 @@ public class DatabuterSessionConnector {
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.ADD_CLUSTER_NODE, new AddClusterNodeMessageDeserializer());
         this.deserializers.put(MessageCode.REMOVE_CLUSTER_NODE, new RemoveClusterNodeMessageDeserializer());
-        this.deserializers.put(MessageCode.BUCKET_ADDED_NOTIFICATION, new BucketAddedNotificationMessageDeserializer());
-        this.deserializers.put(MessageCode.BUCKET_UPDATED_NOTIFICATION, new BucketUpdatedNotificationMessageDeserializer());
+        this.deserializers.put(MessageCode.BUCKET_NOTIFICATION, new BucketNotificationMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {
