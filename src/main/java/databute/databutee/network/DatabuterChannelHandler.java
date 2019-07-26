@@ -2,6 +2,7 @@ package databute.databutee.network;
 
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.add.BucketAddedNotificationMessageHandler;
+import databute.databutee.bucket.notification.update.BucketUpdatedNotificationMessageHandler;
 import databute.databutee.node.add.AddClusterNodeMessageHandler;
 import databute.databutee.node.remove.RemoveClusterNodeMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -45,6 +46,7 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
         pipeline.addLast(new AddClusterNodeMessageHandler(session));
         pipeline.addLast(new RemoveClusterNodeMessageHandler(session));
         pipeline.addLast(new BucketAddedNotificationMessageHandler(session));
+        pipeline.addLast(new BucketUpdatedNotificationMessageHandler(session));
     }
 
     @Override
