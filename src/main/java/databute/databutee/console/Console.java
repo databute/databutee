@@ -3,6 +3,7 @@ package databute.databutee.console;
 import databute.databutee.Databutee;
 import databute.databutee.DatabuteeConfiguration;
 import databute.databutee.DatabuteeConstants;
+import databute.databutee.bucket.Bucket;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.lang3.StringUtils;
@@ -80,6 +81,18 @@ public final class Console {
                     terminal.writer().println("Failed to connect to " + addresses);
 
                     databutee = null;
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "buckets")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final StringBuilder sb = new StringBuilder();
+                    sb.append("Buckets").append(System.lineSeparator());
+                    for (Bucket bucket : databutee.bucketGroup()) {
+                        sb.append("\t").append(bucket).append(System.lineSeparator());
+                    }
+                    sb.append(System.lineSeparator());
+                    terminal.writer().print(sb.toString());
                 }
             }
         }

@@ -2,6 +2,7 @@ package databute.databutee;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import databute.databutee.bucket.BucketGroup;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.register.RegisterMessage;
@@ -23,14 +24,20 @@ public class Databutee {
 
     private final DatabuteeConfiguration configuration;
     private final DatabuterNodeGroup databuterNodeGroup;
+    private final BucketGroup bucketGroup;
 
     public Databutee(DatabuteeConfiguration configuration) {
         this.configuration = checkNotNull(configuration, "configuration");
         this.databuterNodeGroup = new DatabuterNodeGroup();
+        this.bucketGroup = new BucketGroup();
     }
 
     public DatabuterNodeGroup databuterNodeGroup() {
         return databuterNodeGroup;
+    }
+
+    public BucketGroup bucketGroup() {
+        return bucketGroup;
     }
 
     public void connect() throws ConnectException {
@@ -59,6 +66,7 @@ public class Databutee {
         return MoreObjects.toStringHelper(this)
                 .add("configuration", configuration)
                 .add("databuterNodeGroup", databuterNodeGroup)
+                .add("bucketGroup", bucketGroup)
                 .toString();
     }
 }
