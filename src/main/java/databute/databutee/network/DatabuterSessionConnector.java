@@ -12,8 +12,7 @@ import databute.databutee.network.message.codec.PacketToMessageDecoder;
 import databute.databutee.network.packet.codec.ByteToPacketDecoder;
 import databute.databutee.network.packet.codec.PacketToByteEncoder;
 import databute.databutee.network.register.RegisterMessageSerializer;
-import databute.databutee.node.add.AddClusterNodeMessageDeserializer;
-import databute.databutee.node.remove.RemoveClusterNodeMessageDeserializer;
+import databute.databutee.node.notification.NodeNotificationMessageDeserializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -49,8 +48,7 @@ public class DatabuterSessionConnector {
         this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
-        this.deserializers.put(MessageCode.ADD_CLUSTER_NODE, new AddClusterNodeMessageDeserializer());
-        this.deserializers.put(MessageCode.REMOVE_CLUSTER_NODE, new RemoveClusterNodeMessageDeserializer());
+        this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());
         this.deserializers.put(MessageCode.BUCKET_NOTIFICATION, new BucketNotificationMessageDeserializer());
     }
 

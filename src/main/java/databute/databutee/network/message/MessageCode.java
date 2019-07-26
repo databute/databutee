@@ -3,9 +3,8 @@ package databute.databutee.network.message;
 public enum MessageCode {
 
     REGISTER(0),
-    ADD_CLUSTER_NODE(1),
-    REMOVE_CLUSTER_NODE(2),
-    BUCKET_NOTIFICATION(3);
+    NODE_NOTIFICATION(1),
+    BUCKET_NOTIFICATION(2);
 
     private final int value;
 

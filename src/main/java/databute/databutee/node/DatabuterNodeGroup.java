@@ -33,19 +33,9 @@ public class DatabuterNodeGroup {
         return added;
     }
 
-    public boolean remove(String id) {
+    public DatabuterNode remove(String id) {
         checkNotNull(id, "id");
 
-        final DatabuterNode node = nodes.remove(id);
-        final boolean removed = (node != null);
-        if (removed) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Removed databuter node {}", node);
-            } else {
-                logger.info("Removed databuter node {}", node.id());
-            }
-        }
-
-        return removed;
+        return nodes.remove(id);
     }
 }
