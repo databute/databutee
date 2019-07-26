@@ -31,6 +31,7 @@ public class BucketNotificationMessageHandler extends MessageHandler<BucketNotif
 
     private void addBucket(BucketNotificationMessage bucketNotificationMessage) {
         final Bucket bucket = new Bucket(bucketNotificationMessage.id())
+                .factor(bucketNotificationMessage.factor())
                 .activeNodeId(bucketNotificationMessage.activeNodeId())
                 .standbyNodeId(bucketNotificationMessage.standbyNodeId());
         final boolean added = session().databutee().bucketGroup().add(bucket);
