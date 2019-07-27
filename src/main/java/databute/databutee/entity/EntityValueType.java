@@ -1,6 +1,6 @@
 package databute.databutee.entity;
 
-public enum EntityType {
+public enum EntityValueType {
 
     INTEGER,
     LONG,

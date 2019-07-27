@@ -5,7 +5,10 @@ public enum MessageCode {
     REGISTER(0),
     NODE_NOTIFICATION(1),
     BUCKET_NOTIFICATION(2),
-    ENTITY_REQUEST(3);
+    GET_ENTITY(3),
+    SET_ENTITY(4),
+    UPDATE_ENTITY(5),
+    DELETE_ENTITY(6);
 
     private final int value;
 
