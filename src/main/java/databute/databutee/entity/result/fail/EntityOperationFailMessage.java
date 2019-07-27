@@ -1,27 +1,26 @@
-package databute.databutee.entity.get;
+package databute.databutee.entity.result.fail;
 
 import com.google.common.base.MoreObjects;
-import databute.databutee.entity.EntityKey;
 import databute.databutee.entity.EntityMessage;
 import databute.databutee.network.message.MessageCode;
 
-import java.util.UUID;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GetEntityMessage implements EntityMessage {
+public class EntityOperationFailMessage implements EntityMessage {
 
     private final String id;
-    private final EntityKey key;
+    private final String key;
+    private final EntityOperationErrorCode errorCode;
 
-    public GetEntityMessage(EntityKey key) {
-        this.id = UUID.randomUUID().toString();
+    public EntityOperationFailMessage(String id, String key, EntityOperationErrorCode errorCode) {
+        this.id = checkNotNull(id, "id");
         this.key = checkNotNull(key, "key");
+        this.errorCode = checkNotNull(errorCode, "errorCode");
     }
 
     @Override
     public MessageCode messageCode() {
-        return MessageCode.GET_ENTITY;
+        return MessageCode.ENTITY_OPERATION_FAIL;
     }
 
     @Override
@@ -31,7 +30,11 @@ public class GetEntityMessage implements EntityMessage {
 
     @Override
     public String key() {
-        return key.key();
+        return key;
+    }
+
+    public EntityOperationErrorCode errorCode() {
+        return errorCode;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class GetEntityMessage implements EntityMessage {
                 .add("messageCode", messageCode())
                 .add("id", id)
                 .add("key", key)
+                .add("errorCode", errorCode)
                 .toString();
     }
 }

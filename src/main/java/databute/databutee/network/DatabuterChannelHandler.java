@@ -2,6 +2,8 @@ package databute.databutee.network;
 
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageHandler;
+import databute.databutee.entity.result.fail.EntityOperationFailMessageHandler;
+import databute.databutee.entity.result.success.EntityOperationSuccessMessageHandler;
 import databute.databutee.node.notification.NodeNotificationMessageHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -43,6 +45,8 @@ public class DatabuterChannelHandler extends ChannelInboundHandlerAdapter {
 
         pipeline.addLast(new NodeNotificationMessageHandler(session));
         pipeline.addLast(new BucketNotificationMessageHandler(session));
+        pipeline.addLast(new EntityOperationSuccessMessageHandler(session));
+        pipeline.addLast(new EntityOperationFailMessageHandler(session));
     }
 
     @Override

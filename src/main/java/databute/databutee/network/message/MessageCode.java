@@ -8,7 +8,9 @@ public enum MessageCode {
     GET_ENTITY(3),
     SET_ENTITY(4),
     UPDATE_ENTITY(5),
-    DELETE_ENTITY(6);
+    DELETE_ENTITY(6),
+    ENTITY_OPERATION_SUCCESS(7),
+    ENTITY_OPERATION_FAIL(8);
 
     private final int value;
 

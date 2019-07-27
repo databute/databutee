@@ -165,7 +165,7 @@ public class Databutee {
 
     private void sendEntityMessage(EntityMessage entityMessage) {
         final int count = bucketGroup.count();
-        final HashCode hashKey = Hashing.crc32().hashString(entityMessage.key().key(), StandardCharsets.UTF_8);
+        final HashCode hashKey = Hashing.crc32().hashString(entityMessage.key(), StandardCharsets.UTF_8);
         final int factor = Hashing.consistentHash(hashKey, count);
         final Bucket bucket = bucketGroup.findByFactor(factor);
         if (bucket == null) {

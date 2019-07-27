@@ -14,7 +14,7 @@ public class SetEntityMessageSerializer implements MessageSerializer<SetEntityMe
 
         final Packet packet = new BufferedPacket();
         packet.writeString(setEntityMessage.id());
-        packet.writeString(setEntityMessage.key().key());
+        packet.writeString(setEntityMessage.key());
         packet.writeString(setEntityMessage.valueType().name());
         switch (setEntityMessage.valueType()) {
             case INTEGER: {

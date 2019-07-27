@@ -6,6 +6,6 @@ public interface EntityMessage extends Message {
 
     String id();
 
-    EntityKey key();
+    String key();
 
 }

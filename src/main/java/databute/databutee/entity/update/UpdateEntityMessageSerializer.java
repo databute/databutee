@@ -14,7 +14,7 @@ public class UpdateEntityMessageSerializer implements MessageSerializer<UpdateEn
 
         final Packet packet = new BufferedPacket();
         packet.writeString(updateEntityMessage.id());
-        packet.writeString(updateEntityMessage.key().key());
+        packet.writeString(updateEntityMessage.key());
         packet.writeString(updateEntityMessage.valueType().name());
         switch (updateEntityMessage.valueType()) {
             case INTEGER: {

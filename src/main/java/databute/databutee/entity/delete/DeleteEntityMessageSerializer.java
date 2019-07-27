@@ -14,7 +14,7 @@ public class DeleteEntityMessageSerializer implements MessageSerializer<DeleteEn
 
         final Packet packet = new BufferedPacket();
         packet.writeString(deleteEntityMessage.id());
-        packet.writeString(deleteEntityMessage.key().key());
+        packet.writeString(deleteEntityMessage.key());
         return packet;
     }
 }

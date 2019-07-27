@@ -5,6 +5,8 @@ import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
 import databute.databutee.entity.delete.DeleteEntityMessageSerializer;
 import databute.databutee.entity.get.GetEntityMessageSerializer;
+import databute.databutee.entity.result.fail.EntityOperationFailMessageDeserializer;
+import databute.databutee.entity.result.success.EntityOperationSuccessMessageDeserializer;
 import databute.databutee.entity.set.SetEntityMessageSerializer;
 import databute.databutee.entity.update.UpdateEntityMessageSerializer;
 import databute.databutee.network.message.MessageCode;
@@ -58,6 +60,8 @@ public class DatabuterSessionConnector {
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());
         this.deserializers.put(MessageCode.BUCKET_NOTIFICATION, new BucketNotificationMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTITY_OPERATION_SUCCESS, new EntityOperationSuccessMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTITY_OPERATION_FAIL, new EntityOperationFailMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {

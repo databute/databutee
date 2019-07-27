@@ -14,7 +14,7 @@ public class GetEntityMessageSerializer implements MessageSerializer<GetEntityMe
 
         final Packet packet = new BufferedPacket();
         packet.writeString(getEntityMessage.id());
-        packet.writeString(getEntityMessage.key().key());
+        packet.writeString(getEntityMessage.key());
         return packet;
     }
 }

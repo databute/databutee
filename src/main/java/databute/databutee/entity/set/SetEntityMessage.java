@@ -47,8 +47,8 @@ public class SetEntityMessage implements EntityMessage {
     }
 
     @Override
-    public EntityKey key() {
-        return key;
+    public String key() {
+        return key.key();
     }
 
     public EntityValueType valueType() {
