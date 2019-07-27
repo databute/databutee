@@ -61,7 +61,7 @@ public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificat
                 .thenAccept(nodeSession -> {
                     logger.info("Connected with Databuter node {} at {}", node.id(), remoteAddress);
 
-                    node.session(session());
+                    node.session(nodeSession);
                 })
                 .exceptionally(e -> {
                     logger.error("Failed to connect to Databuter node {}.", node.id(), e);

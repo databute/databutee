@@ -3,6 +3,12 @@ package databute.databutee.network;
 import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
+import databute.databutee.entity.delete.DeleteEntityMessageSerializer;
+import databute.databutee.entity.get.GetEntityMessageSerializer;
+import databute.databutee.entity.result.fail.EntityOperationFailMessageDeserializer;
+import databute.databutee.entity.result.success.EntityOperationSuccessMessageDeserializer;
+import databute.databutee.entity.set.SetEntityMessageSerializer;
+import databute.databutee.entity.update.UpdateEntityMessageSerializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -46,10 +52,16 @@ public class DatabuterSessionConnector {
 
         this.serializers = Maps.newHashMap();
         this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
+        this.serializers.put(MessageCode.GET_ENTITY, new GetEntityMessageSerializer());
+        this.serializers.put(MessageCode.SET_ENTITY, new SetEntityMessageSerializer());
+        this.serializers.put(MessageCode.UPDATE_ENTITY, new UpdateEntityMessageSerializer());
+        this.serializers.put(MessageCode.DELETE_ENTITY, new DeleteEntityMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());
         this.deserializers.put(MessageCode.BUCKET_NOTIFICATION, new BucketNotificationMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTITY_OPERATION_SUCCESS, new EntityOperationSuccessMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTITY_OPERATION_FAIL, new EntityOperationFailMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {

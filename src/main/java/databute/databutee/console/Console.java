@@ -4,6 +4,7 @@ import databute.databutee.Databutee;
 import databute.databutee.DatabuteeConfiguration;
 import databute.databutee.DatabuteeConstants;
 import databute.databutee.bucket.Bucket;
+import databute.databutee.entity.EmptyEntityKeyException;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.lang3.StringUtils;
@@ -93,6 +94,100 @@ public final class Console {
                     }
                     sb.append(System.lineSeparator());
                     terminal.writer().print(sb.toString());
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "get")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    try {
+                        databutee.get(key);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "seti")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final Integer value = Integer.parseInt(parsedLine.words().get(2));
+                    try {
+                        databutee.setInteger(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "setl")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final Long value = Long.parseLong(parsedLine.words().get(2));
+                    try {
+                        databutee.setLong(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "sets")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final String value = parsedLine.words().get(2);
+                    try {
+                        databutee.setString(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "updatei")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final Integer value = Integer.parseInt(parsedLine.words().get(2));
+                    try {
+                        databutee.updateInteger(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "updatel")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final Long value = Long.parseLong(parsedLine.words().get(2));
+                    try {
+                        databutee.updateLong(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "updates")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final String value = parsedLine.words().get(2);
+                    try {
+                        databutee.updateString(key, value);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "delete")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    try {
+                        databutee.delete(key);
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
                 }
             }
         }
