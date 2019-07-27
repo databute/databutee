@@ -13,6 +13,7 @@ public class DeleteEntityMessageSerializer implements MessageSerializer<DeleteEn
         checkNotNull(deleteEntityMessage, "deleteEntityMessage");
 
         final Packet packet = new BufferedPacket();
+        packet.writeString(deleteEntityMessage.id());
         packet.writeString(deleteEntityMessage.key().key());
         return packet;
     }

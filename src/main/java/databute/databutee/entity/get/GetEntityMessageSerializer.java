@@ -13,6 +13,7 @@ public class GetEntityMessageSerializer implements MessageSerializer<GetEntityMe
         checkNotNull(getEntityMessage, "getEntityMessage");
 
         final Packet packet = new BufferedPacket();
+        packet.writeString(getEntityMessage.id());
         packet.writeString(getEntityMessage.key().key());
         return packet;
     }

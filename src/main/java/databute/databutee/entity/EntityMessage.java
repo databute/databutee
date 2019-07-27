@@ -4,6 +4,8 @@ import databute.databutee.network.message.Message;
 
 public interface EntityMessage extends Message {
 
+    String id();
+
     EntityKey key();
 
 }

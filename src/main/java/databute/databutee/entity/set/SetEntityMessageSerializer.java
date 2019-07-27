@@ -13,6 +13,7 @@ public class SetEntityMessageSerializer implements MessageSerializer<SetEntityMe
         checkNotNull(setEntityMessage, "setEntityMessage");
 
         final Packet packet = new BufferedPacket();
+        packet.writeString(setEntityMessage.id());
         packet.writeString(setEntityMessage.key().key());
         packet.writeString(setEntityMessage.valueType().name());
         switch (setEntityMessage.valueType()) {
