@@ -38,11 +38,13 @@ public class Databutee {
     private final DatabuteeConfiguration configuration;
     private final DatabuterNodeGroup databuterNodeGroup;
     private final BucketGroup bucketGroup;
+    private final Dispatcher dispatcher;
 
     public Databutee(DatabuteeConfiguration configuration) {
         this.configuration = checkNotNull(configuration, "configuration");
         this.databuterNodeGroup = new DatabuterNodeGroup();
         this.bucketGroup = new BucketGroup();
+        this.dispatcher = new Dispatcher();
     }
 
     public DatabuteeConfiguration configuration() {
@@ -55,6 +57,10 @@ public class Databutee {
 
     public BucketGroup bucketGroup() {
         return bucketGroup;
+    }
+
+    public Dispatcher dispatcher() {
+        return dispatcher;
     }
 
     public void connect() throws ConnectException {
@@ -78,92 +84,124 @@ public class Databutee {
         throw new ConnectException();
     }
 
-    public void get(String key) throws EmptyEntityKeyException {
+    public void get(String key, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(callback, "callback");
+
         final EntityKey entityKey = new EntityKey(key);
         final GetEntityMessage getEntityMessage = new GetEntityMessage(entityKey);
-        sendEntityMessage(getEntityMessage);
+        sendEntityMessage(getEntityMessage, callback);
     }
 
-    public void set(String key, Object value) throws EmptyEntityKeyException {
+    public void set(String key, Object value, Callback callback) throws EmptyEntityKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
 
         if (value instanceof Integer) {
             final Integer integerValue = (Integer) value;
-            setInteger(key, integerValue);
+            setInteger(key, integerValue, callback);
         } else if (value instanceof Long) {
             final Long longValue = (Long) value;
-            setLong(key, longValue);
+            setLong(key, longValue, callback);
         } else if (value instanceof String) {
             final String stringValue = (String) value;
-            setString(key, stringValue);
+            setString(key, stringValue, callback);
         } else {
             throw new UnsupportedValueTypeException();
         }
     }
 
-    public void setInteger(String key, Integer value) throws EmptyEntityKeyException {
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setInteger(entityKey, value);
-        sendEntityMessage(setEntityMessage);
-    }
-
-    public void setLong(String key, Long value) throws EmptyEntityKeyException {
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setLong(entityKey, value);
-        sendEntityMessage(setEntityMessage);
-    }
-
-    public void setString(String key, String value) throws EmptyEntityKeyException {
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setString(entityKey, value);
-        sendEntityMessage(setEntityMessage);
-    }
-
-    public void update(String key, Object value) throws EmptyEntityKeyException {
+    public void setInteger(String key, Integer value, Callback callback) throws EmptyEntityKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setInteger(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
+    public void setLong(String key, Long value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setLong(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
+    public void setString(String key, String value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setString(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
+    public void update(String key, Object value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
 
         if (value instanceof Integer) {
             final Integer integerValue = (Integer) value;
-            updateInteger(key, integerValue);
+            updateInteger(key, integerValue, callback);
         } else if (value instanceof Long) {
             final Long longValue = (Long) value;
-            updateLong(key, longValue);
+            updateLong(key, longValue, callback);
         } else if (value instanceof String) {
             final String stringValue = (String) value;
-            updateString(key, stringValue);
+            updateString(key, stringValue, callback);
         } else {
             final String toStringValue = value.toString();
-            updateString(key, toStringValue);
+            updateString(key, toStringValue, callback);
         }
     }
 
-    public void updateInteger(String key, Integer value) throws EmptyEntityKeyException {
+    public void updateInteger(String key, Integer value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
         final EntityKey entityKey = new EntityKey(key);
         final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateInteger(entityKey, value);
-        sendEntityMessage(updateEntityMessage);
+        sendEntityMessage(updateEntityMessage, callback);
     }
 
-    public void updateLong(String key, Long value) throws EmptyEntityKeyException {
+    public void updateLong(String key, Long value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
         final EntityKey entityKey = new EntityKey(key);
         final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateLong(entityKey, value);
-        sendEntityMessage(updateEntityMessage);
+        sendEntityMessage(updateEntityMessage, callback);
     }
 
-    public void updateString(String key, String value) throws EmptyEntityKeyException {
+    public void updateString(String key, String value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
         final EntityKey entityKey = new EntityKey(key);
         final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateString(entityKey, value);
-        sendEntityMessage(updateEntityMessage);
+        sendEntityMessage(updateEntityMessage, callback);
     }
 
-    public void delete(String key) throws EmptyEntityKeyException {
+    public void delete(String key, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(callback, "callback");
+
         final EntityKey entityKey = new EntityKey(key);
         final DeleteEntityMessage deleteEntityMessage = new DeleteEntityMessage(entityKey);
-        sendEntityMessage(deleteEntityMessage);
+        sendEntityMessage(deleteEntityMessage, callback);
     }
 
-    private void sendEntityMessage(EntityMessage entityMessage) {
+    private void sendEntityMessage(EntityMessage entityMessage, Callback callback) {
         final int count = bucketGroup.count();
         final HashCode hashKey = Hashing.crc32().hashString(entityMessage.key(), StandardCharsets.UTF_8);
         final int factor = Hashing.consistentHash(hashKey, count);
@@ -173,11 +211,13 @@ public class Databutee {
         } else {
             final DatabuterNode activeNode = bucket.activeNode();
             if (activeNode != null) {
+                dispatcher.enqueue(entityMessage.id(), callback);
                 activeNode.session().send(entityMessage);
                 logger.debug("factor: {}, bucket: {}, active node: {}", factor, bucket.id(), activeNode.id());
             } else {
                 final DatabuterNode standbyNode = bucket.standbyNode();
                 if (standbyNode != null) {
+                    dispatcher.enqueue(entityMessage.id(), callback);
                     standbyNode.session().send(entityMessage);
                     logger.debug("factor: {}, bucket: {}, standby node: {}", factor, bucket.id(), standbyNode.id());
                 } else {
