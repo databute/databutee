@@ -1,12 +1,17 @@
 package databute.databutee.node;
 
 import com.google.common.base.MoreObjects;
+import databute.databutee.network.DatabuterSession;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DatabuterNode {
 
     public static DatabuterNode.Builder builder() {
         return new DatabuterNode.Builder();
     }
+
+    private DatabuterSession session;
 
     private final String id;
     private final String address;
@@ -30,12 +35,22 @@ public class DatabuterNode {
         return port;
     }
 
+    public DatabuterSession session() {
+        return session;
+    }
+
+    public DatabuterNode session(DatabuterSession session) {
+        this.session = checkNotNull(session, "session");
+        return this;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("address", address)
                 .add("port", port)
+                .add("session", session)
                 .toString();
     }
 

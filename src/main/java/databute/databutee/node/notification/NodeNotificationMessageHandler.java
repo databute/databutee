@@ -1,10 +1,15 @@
 package databute.databutee.node.notification;
 
+import databute.databutee.Databutee;
 import databute.databutee.network.DatabuterSession;
+import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.message.MessageHandler;
 import databute.databutee.node.DatabuterNode;
+import io.netty.channel.EventLoopGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.InetSocketAddress;
 
 public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificationMessage> {
 
@@ -35,7 +40,29 @@ public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificat
         final boolean added = session().databutee().databuterNodeGroup().add(node);
         if (added) {
             logger.debug("Added databuter node {}", node);
+
+            connectToNode(node);
         }
+    }
+
+    private void connectToNode(DatabuterNode node) {
+        final Databutee databutee = session().databutee();
+        final EventLoopGroup loopGroup = databutee.configuration().loopGroup();
+
+        final String address = node.address();
+        final int port = node.port();
+        final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
+        final DatabuterSessionConnector connector = new DatabuterSessionConnector(databutee, loopGroup);
+        connector.connect(remoteAddress)
+                .thenAccept(nodeSession -> {
+                    logger.info("Connected with Databuter node {} at {}", node.id(), remoteAddress);
+
+                    node.session(session());
+                })
+                .exceptionally(e -> {
+                    logger.error("Failed to connect to Databuter node {}.", node.id(), e);
+                    return null;
+                });
     }
 
     private void removeNode(NodeNotificationMessage nodeNotificationMessage) {

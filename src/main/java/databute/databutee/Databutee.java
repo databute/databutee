@@ -32,6 +32,10 @@ public class Databutee {
         this.bucketGroup = new BucketGroup();
     }
 
+    public DatabuteeConfiguration configuration() {
+        return configuration;
+    }
+
     public DatabuterNodeGroup databuterNodeGroup() {
         return databuterNodeGroup;
     }
