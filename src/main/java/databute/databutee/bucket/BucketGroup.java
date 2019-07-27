@@ -32,8 +32,21 @@ public class BucketGroup implements Iterable<Bucket> {
         return buckets.values().spliterator();
     }
 
+    public int count() {
+        return buckets.size();
+    }
+
     public Bucket find(String id) {
         return buckets.get(id);
+    }
+
+    public Bucket findByFactor(int factor) {
+        for (Bucket bucket : buckets.values()) {
+            if (bucket.factor() == factor) {
+                return bucket;
+            }
+        }
+        return null;
     }
 
     public boolean add(Bucket bucket) {
