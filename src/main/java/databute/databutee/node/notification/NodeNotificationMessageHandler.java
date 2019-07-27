@@ -41,24 +41,26 @@ public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificat
         if (added) {
             logger.debug("Added databuter node {}", node);
 
-            connectToNode(nodeNotificationMessage);
+            connectToNode(node);
         }
     }
 
-    private void connectToNode(NodeNotificationMessage nodeNotificationMessage) {
+    private void connectToNode(DatabuterNode node) {
         final Databutee databutee = session().databutee();
         final EventLoopGroup loopGroup = databutee.configuration().loopGroup();
 
-        final String address = nodeNotificationMessage.address();
-        final int port = nodeNotificationMessage.port();
+        final String address = node.address();
+        final int port = node.port();
         final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
         final DatabuterSessionConnector connector = new DatabuterSessionConnector(databutee, loopGroup);
         connector.connect(remoteAddress)
                 .thenAccept(nodeSession -> {
-                    logger.info("Connected with Databuter node {} at {}", nodeNotificationMessage.id(), remoteAddress);
+                    logger.info("Connected with Databuter node {} at {}", node.id(), remoteAddress);
+
+                    node.session(session());
                 })
                 .exceptionally(e -> {
-                    logger.error("Failed to connect to Databuter node {}.", nodeNotificationMessage.id(), e);
+                    logger.error("Failed to connect to Databuter node {}.", node.id(), e);
                     return null;
                 });
     }
