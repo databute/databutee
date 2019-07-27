@@ -3,7 +3,10 @@ package databute.databutee.entity.result.fail;
 import databute.databutee.Callback;
 import databute.databutee.Databutee;
 import databute.databutee.Dispatcher;
+import databute.databutee.entity.DuplicateEntityKeyException;
+import databute.databutee.entity.EmptyEntityKeyException;
 import databute.databutee.entity.NotFoundException;
+import databute.databutee.entity.UnsupportedValueTypeException;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.message.MessageHandler;
 import org.slf4j.Logger;
@@ -30,6 +33,15 @@ public class EntityOperationFailMessageHandler extends MessageHandler<EntityOper
             switch (entityOperationFailMessage.errorCode()) {
                 case NOT_FOUND:
                     callback.onFailure(new NotFoundException(entityOperationFailMessage.key()));
+                    break;
+                case EMPTY_KEY:
+                    callback.onFailure(new EmptyEntityKeyException(entityOperationFailMessage.key()));
+                    break;
+                case DUPLICATE_KEY:
+                    callback.onFailure(new DuplicateEntityKeyException(entityOperationFailMessage.key()));
+                    break;
+                case UNSUPPORTED_VALUE_TYPE:
+                    callback.onFailure(new UnsupportedValueTypeException());
                     break;
             }
         }
