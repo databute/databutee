@@ -3,6 +3,7 @@ package databute.databutee.network;
 import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
+import databute.databutee.entity.request.EntityRequestMessageSerializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -46,6 +47,7 @@ public class DatabuterSessionConnector {
 
         this.serializers = Maps.newHashMap();
         this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
+        this.serializers.put(MessageCode.ENTITY_REQUEST, new EntityRequestMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());
