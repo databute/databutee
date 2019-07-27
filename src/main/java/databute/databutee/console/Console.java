@@ -1,10 +1,12 @@
 package databute.databutee.console;
 
+import databute.databutee.Callback;
 import databute.databutee.Databutee;
 import databute.databutee.DatabuteeConfiguration;
 import databute.databutee.DatabuteeConstants;
 import databute.databutee.bucket.Bucket;
 import databute.databutee.entity.EmptyEntityKeyException;
+import databute.databutee.entity.Entity;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.lang3.StringUtils;
@@ -101,7 +103,17 @@ public final class Console {
                 } else {
                     final String key = parsedLine.words().get(1);
                     try {
-                        databutee.get(key);
+                        databutee.get(key, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -113,7 +125,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final Integer value = Integer.parseInt(parsedLine.words().get(2));
                     try {
-                        databutee.setInteger(key, value);
+                        databutee.setInteger(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -125,7 +147,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final Long value = Long.parseLong(parsedLine.words().get(2));
                     try {
-                        databutee.setLong(key, value);
+                        databutee.setLong(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -137,7 +169,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final String value = parsedLine.words().get(2);
                     try {
-                        databutee.setString(key, value);
+                        databutee.setString(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -149,7 +191,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final Integer value = Integer.parseInt(parsedLine.words().get(2));
                     try {
-                        databutee.updateInteger(key, value);
+                        databutee.updateInteger(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -161,7 +213,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final Long value = Long.parseLong(parsedLine.words().get(2));
                     try {
-                        databutee.updateLong(key, value);
+                        databutee.updateLong(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -173,7 +235,17 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     final String value = parsedLine.words().get(2);
                     try {
-                        databutee.updateString(key, value);
+                        databutee.updateString(key, value, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
@@ -184,7 +256,17 @@ public final class Console {
                 } else {
                     final String key = parsedLine.words().get(1);
                     try {
-                        databutee.delete(key);
+                        databutee.delete(key, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
                     } catch (EmptyEntityKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
