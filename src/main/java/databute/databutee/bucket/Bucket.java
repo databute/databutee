@@ -52,6 +52,10 @@ public class Bucket {
         return this;
     }
 
+    public boolean isActiveBy(String nodeId) {
+        return StringUtils.equals(activeNodeId, nodeId);
+    }
+
     public String standbyNodeId() {
         return standbyNodeId;
     }
@@ -68,6 +72,10 @@ public class Bucket {
     public Bucket standbyNode(DatabuterNode standbyNode) {
         this.standbyNode = standbyNode;
         return this;
+    }
+
+    public boolean isStandbyBy(String nodeId) {
+        return StringUtils.equals(standbyNodeId, nodeId);
     }
 
     public boolean update(BucketNotificationMessage bucketNotificationMessage) {
