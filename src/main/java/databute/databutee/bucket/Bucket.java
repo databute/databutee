@@ -2,6 +2,7 @@ package databute.databutee.bucket;
 
 import com.google.common.base.MoreObjects;
 import databute.databutee.bucket.notification.BucketNotificationMessage;
+import databute.databutee.node.DatabuterNode;
 import org.apache.commons.lang3.StringUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -10,7 +11,9 @@ public class Bucket {
 
     private int factor;
     private String activeNodeId;
+    private DatabuterNode activeNode;
     private String standbyNodeId;
+    private DatabuterNode standbyNode;
 
     private final String id;
 
@@ -40,12 +43,30 @@ public class Bucket {
         return this;
     }
 
+    public DatabuterNode activeNode() {
+        return activeNode;
+    }
+
+    public Bucket activeNode(DatabuterNode activeNode) {
+        this.activeNode = activeNode;
+        return this;
+    }
+
     public String standbyNodeId() {
         return standbyNodeId;
     }
 
     public Bucket standbyNodeId(String standbyNodeId) {
         this.standbyNodeId = standbyNodeId;
+        return this;
+    }
+
+    public DatabuterNode standbyNode() {
+        return standbyNode;
+    }
+
+    public Bucket standbyNode(DatabuterNode standbyNode) {
+        this.standbyNode = standbyNode;
         return this;
     }
 
