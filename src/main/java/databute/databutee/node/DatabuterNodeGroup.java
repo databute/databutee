@@ -18,6 +18,10 @@ public class DatabuterNodeGroup {
         this.nodes = Maps.newConcurrentMap();
     }
 
+    public DatabuterNode find(String nodeId) {
+        return nodes.get(nodeId);
+    }
+
     public boolean add(DatabuterNode node) {
         checkNotNull(node, "node");
 

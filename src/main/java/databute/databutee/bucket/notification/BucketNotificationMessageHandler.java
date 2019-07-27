@@ -3,6 +3,9 @@ package databute.databutee.bucket.notification;
 import databute.databutee.bucket.Bucket;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.message.MessageHandler;
+import databute.databutee.node.DatabuterNode;
+import databute.databutee.node.DatabuterNodeGroup;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +40,9 @@ public class BucketNotificationMessageHandler extends MessageHandler<BucketNotif
         final boolean added = session().databutee().bucketGroup().add(bucket);
         if (added) {
             logger.debug("Added bucket {}", bucket);
+
+            syncActiveDatabuterNode(bucket);
+            syncStandbyDatabuterNode(bucket);
         }
     }
 
@@ -45,8 +51,41 @@ public class BucketNotificationMessageHandler extends MessageHandler<BucketNotif
         if (bucket == null) {
             logger.error("Failed to update bucket from notification message {}", bucketNotificationMessage);
         } else {
-            bucket.update(bucketNotificationMessage);
-            logger.debug("Updated bucket {}", bucket);
+            final boolean updated = bucket.update(bucketNotificationMessage);
+            if (updated) {
+                logger.debug("Updated bucket {}", bucket);
+
+                syncActiveDatabuterNode(bucket);
+                syncStandbyDatabuterNode(bucket);
+            }
+        }
+    }
+
+    private void syncActiveDatabuterNode(Bucket bucket) {
+        if (StringUtils.isEmpty(bucket.activeNodeId())) {
+            return;
+        }
+
+        final DatabuterNodeGroup databuterNodeGroup = session().databutee().databuterNodeGroup();
+        final DatabuterNode databuterNode = databuterNodeGroup.find(bucket.activeNodeId());
+        if (databuterNode != null) {
+            // 현재 Databuter 노드와 연결되어있지 않더라도, Databuter 노드가 연결될 때 버킷을 찾아 연결 할 것
+            bucket.activeNode(databuterNode);
+            logger.debug("Synchronized active databuter node {} to bucket {}", databuterNode.id(), bucket.id());
+        }
+    }
+
+    private void syncStandbyDatabuterNode(Bucket bucket) {
+        if (StringUtils.isEmpty(bucket.activeNodeId())) {
+            return;
+        }
+
+        final DatabuterNodeGroup databuterNodeGroup = session().databutee().databuterNodeGroup();
+        final DatabuterNode databuterNode = databuterNodeGroup.find(bucket.standbyNodeId());
+        if (databuterNode != null) {
+            // 현재 Databuter 노드와 연결되어있지 않더라도, Databuter 노드가 연결될 때 버킷을 찾아 연결 할 것
+            bucket.standbyNode(databuterNode);
+            logger.debug("Synchronized standby databuter node {} to bucket {}", databuterNode.id(), bucket.id());
         }
     }
 

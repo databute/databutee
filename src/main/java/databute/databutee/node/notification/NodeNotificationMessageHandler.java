@@ -1,6 +1,8 @@
 package databute.databutee.node.notification;
 
 import databute.databutee.Databutee;
+import databute.databutee.bucket.Bucket;
+import databute.databutee.bucket.BucketGroup;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.message.MessageHandler;
@@ -41,6 +43,8 @@ public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificat
         if (added) {
             logger.debug("Added databuter node {}", node);
 
+            syncBuckets(node);
+
             connectToNode(node);
         }
     }
@@ -63,6 +67,21 @@ public class NodeNotificationMessageHandler extends MessageHandler<NodeNotificat
                     logger.error("Failed to connect to Databuter node {}.", node.id(), e);
                     return null;
                 });
+    }
+
+    private void syncBuckets(DatabuterNode node) {
+        final String nodeId = node.id();
+        final BucketGroup bucketGroup = session().databutee().bucketGroup();
+        for (Bucket bucket : bucketGroup) {
+            if (bucket.isActiveBy(nodeId)) {
+                bucket.activeNode(node);
+                logger.debug("Synchronized active databuter node {} to bucket {}", node.id(), bucket.id());
+            }
+            if (bucket.isStandbyBy(nodeId)) {
+                bucket.standbyNode(node);
+                logger.debug("Synchronized standby databuter node {} to bucket {}", node.id(), bucket.id());
+            }
+        }
     }
 
     private void removeNode(NodeNotificationMessage nodeNotificationMessage) {
