@@ -13,9 +13,9 @@ public class BucketNotificationMessageDeserializer implements MessageDeserialize
 
         final BucketNotificationType type = BucketNotificationType.valueOf(packet.readString());
         final String id = packet.readString();
-        final int factor = packet.readInt();
+        final int keyFactor = packet.readInt();
         final String activeNodeId = packet.readString();
         final String standbyNodeId = packet.readString();
-        return new BucketNotificationMessage(type, id, factor, activeNodeId, standbyNodeId);
+        return new BucketNotificationMessage(type, id, keyFactor, activeNodeId, standbyNodeId);
     }
 }

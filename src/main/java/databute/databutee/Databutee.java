@@ -204,22 +204,22 @@ public class Databutee {
     private void sendEntityMessage(EntityMessage entityMessage, Callback callback) {
         final int count = bucketGroup.count();
         final HashCode hashKey = Hashing.crc32().hashString(entityMessage.key(), StandardCharsets.UTF_8);
-        final int factor = Hashing.consistentHash(hashKey, count);
-        final Bucket bucket = bucketGroup.findByFactor(factor);
+        final int keyFactor = Hashing.consistentHash(hashKey, count);
+        final Bucket bucket = bucketGroup.findByKeyFactor(keyFactor);
         if (bucket == null) {
-            logger.error("Failed to find bucket by factor {}.", factor);
+            logger.error("Failed to find bucket by keyFactor {}.", keyFactor);
         } else {
             final DatabuterNode activeNode = bucket.activeNode();
             if (activeNode != null) {
                 dispatcher.enqueue(entityMessage.id(), callback);
                 activeNode.session().send(entityMessage);
-                logger.debug("factor: {}, bucket: {}, active node: {}", factor, bucket.id(), activeNode.id());
+                logger.debug("keyFactor: {}, bucket: {}, active node: {}", keyFactor, bucket.id(), activeNode.id());
             } else {
                 final DatabuterNode standbyNode = bucket.standbyNode();
                 if (standbyNode != null) {
                     dispatcher.enqueue(entityMessage.id(), callback);
                     standbyNode.session().send(entityMessage);
-                    logger.debug("factor: {}, bucket: {}, standby node: {}", factor, bucket.id(), standbyNode.id());
+                    logger.debug("keyFactor: {}, bucket: {}, standby node: {}", keyFactor, bucket.id(), standbyNode.id());
                 } else {
                     logger.error("Bucket {} does not assigned to any node.", bucket.id());
                 }
