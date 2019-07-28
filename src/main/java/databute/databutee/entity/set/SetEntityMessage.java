@@ -6,6 +6,9 @@ import databute.databutee.entity.EntityMessage;
 import databute.databutee.entity.EntityValueType;
 import databute.databutee.network.message.MessageCode;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,6 +25,18 @@ public class SetEntityMessage implements EntityMessage {
 
     public static SetEntityMessage setString(EntityKey key, String stringValue) {
         return new SetEntityMessage(key, EntityValueType.STRING, stringValue);
+    }
+
+    public static SetEntityMessage setList(EntityKey key, List<String> listValue) {
+        return new SetEntityMessage(key, EntityValueType.LIST, listValue);
+    }
+
+    public static SetEntityMessage setSet(EntityKey key, Set<String> setValue) {
+        return new SetEntityMessage(key, EntityValueType.SET, setValue);
+    }
+
+    public static SetEntityMessage setDictionary(EntityKey key, Map<String, String> dictionaryValue) {
+        return new SetEntityMessage(key, EntityValueType.DICTIONARY, dictionaryValue);
     }
 
     private final String id;

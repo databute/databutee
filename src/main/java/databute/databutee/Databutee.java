@@ -27,6 +27,8 @@ import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -142,6 +144,36 @@ public class Databutee {
         sendEntityMessage(setEntityMessage, callback);
     }
 
+    public void setList(String key, List<String> value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setList(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
+    public void setSet(String key, Set<String> value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setSet(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
+    public void setDictionary(String key, Map<String, String> value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final SetEntityMessage setEntityMessage = SetEntityMessage.setDictionary(entityKey, value);
+        sendEntityMessage(setEntityMessage, callback);
+    }
+
     public void update(String key, Object value, Callback callback) throws EmptyEntityKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
@@ -189,6 +221,37 @@ public class Databutee {
 
         final EntityKey entityKey = new EntityKey(key);
         final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateString(entityKey, value);
+        sendEntityMessage(updateEntityMessage, callback);
+    }
+
+    public void updateList(String key, List<String> value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateList(entityKey, value);
+        sendEntityMessage(updateEntityMessage, callback);
+    }
+
+    public void updateSet(String key, Set<String> value, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateSet(entityKey, value);
+        sendEntityMessage(updateEntityMessage, callback);
+    }
+
+    public void updateDictionary(String key, Map<String, String> value, Callback callback)
+            throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(value, "value");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateDictionary(entityKey, value);
         sendEntityMessage(updateEntityMessage, callback);
     }
 
