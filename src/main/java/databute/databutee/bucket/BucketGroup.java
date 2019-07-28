@@ -40,9 +40,9 @@ public class BucketGroup implements Iterable<Bucket> {
         return buckets.get(id);
     }
 
-    public Bucket findByFactor(int factor) {
+    public Bucket findByKeyFactor(int keyFactor) {
         for (Bucket bucket : buckets.values()) {
-            if (bucket.factor() == factor) {
+            if (bucket.keyFactor() == keyFactor) {
                 return bucket;
             }
         }

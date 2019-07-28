@@ -9,7 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Bucket {
 
-    private int factor;
+    private int keyFactor;
     private String activeNodeId;
     private DatabuterNode activeNode;
     private String standbyNodeId;
@@ -25,12 +25,12 @@ public class Bucket {
         return id;
     }
 
-    public int factor() {
-        return factor;
+    public int keyFactor() {
+        return keyFactor;
     }
 
-    public Bucket factor(int factor) {
-        this.factor = factor;
+    public Bucket keyFactor(int keyFactor) {
+        this.keyFactor = keyFactor;
         return this;
     }
 
@@ -83,8 +83,8 @@ public class Bucket {
 
         boolean updated = false;
 
-        if (factor != bucketNotificationMessage.factor()) {
-            this.factor = bucketNotificationMessage.factor();
+        if (keyFactor != bucketNotificationMessage.keyFactor()) {
+            this.keyFactor = bucketNotificationMessage.keyFactor();
             updated = true;
         }
 
@@ -105,7 +105,7 @@ public class Bucket {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
-                .add("factor", factor)
+                .add("keyFactor", keyFactor)
                 .add("activeNodeId", activeNodeId)
                 .add("standbyNodeId", standbyNodeId)
                 .toString();
