@@ -22,6 +22,7 @@ import org.jline.terminal.TerminalBuilder;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -384,6 +385,29 @@ public final class Console {
                     final String key = parsedLine.words().get(1);
                     try {
                         databutee.delete(key, new Callback() {
+                            @Override
+                            public void onSuccess(Entity entity) {
+                                terminal.writer().println(entity.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                terminal.writer().println(e.toString());
+                            }
+                        });
+                    } catch (EmptyEntityKeyException e) {
+                        terminal.writer().println("key must not be empty.");
+                    }
+                }
+            } else if (StringUtils.equals(parsedLine.word(), "expire")) {
+                if (databutee == null) {
+                    terminal.writer().println("not connected yet");
+                } else {
+                    final String key = parsedLine.words().get(1);
+                    final long expireAfter = Long.parseLong(parsedLine.words().get(2));
+                    final Instant expireAt = Instant.now().plusSeconds(expireAfter);
+                    try {
+                        databutee.expire(key, expireAt, new Callback() {
                             @Override
                             public void onSuccess(Entity entity) {
                                 terminal.writer().println(entity.toString());
