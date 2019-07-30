@@ -1,18 +1,18 @@
 package databute.databutee.entry.result.fail;
 
 import com.google.common.base.MoreObjects;
-import databute.databutee.entry.EntityMessage;
+import databute.databutee.entry.EntryMessage;
 import databute.databutee.network.message.MessageCode;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntityOperationFailMessage implements EntityMessage {
+public class EntryOperationFailMessage implements EntryMessage {
 
     private final String id;
     private final String key;
-    private final EntityOperationErrorCode errorCode;
+    private final EntryOperationErrorCode errorCode;
 
-    public EntityOperationFailMessage(String id, String key, EntityOperationErrorCode errorCode) {
+    public EntryOperationFailMessage(String id, String key, EntryOperationErrorCode errorCode) {
         this.id = checkNotNull(id, "id");
         this.key = checkNotNull(key, "key");
         this.errorCode = checkNotNull(errorCode, "errorCode");
@@ -20,7 +20,7 @@ public class EntityOperationFailMessage implements EntityMessage {
 
     @Override
     public MessageCode messageCode() {
-        return MessageCode.ENTITY_OPERATION_FAIL;
+        return MessageCode.ENTRY_OPERATION_FAIL;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class EntityOperationFailMessage implements EntityMessage {
         return key;
     }
 
-    public EntityOperationErrorCode errorCode() {
+    public EntryOperationErrorCode errorCode() {
         return errorCode;
     }
 

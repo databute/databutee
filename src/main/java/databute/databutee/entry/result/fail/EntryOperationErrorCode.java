@@ -1,6 +1,6 @@
 package databute.databutee.entry.result.fail;
 
-public enum EntityOperationErrorCode {
+public enum EntryOperationErrorCode {
 
     NOT_FOUND,
     EMPTY_KEY,

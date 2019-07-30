@@ -1,29 +1,29 @@
 package databute.databutee.entry.result.success;
 
 import com.google.common.base.MoreObjects;
-import databute.databutee.entry.EntityMessage;
-import databute.databutee.entry.EntityValueType;
+import databute.databutee.entry.EntryMessage;
+import databute.databutee.entry.EntryValueType;
 import databute.databutee.network.message.MessageCode;
 
 import java.time.Instant;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntityOperationSuccessMessage implements EntityMessage {
+public class EntryOperationSuccessMessage implements EntryMessage {
 
     private final String id;
     private final String key;
-    private final EntityValueType valueType;
+    private final EntryValueType valueType;
     private final Object value;
     private final Instant createdTimestamp;
     private final Instant lastUpdatedTimestamp;
 
-    public EntityOperationSuccessMessage(String id,
-                                         String key,
-                                         EntityValueType valueType,
-                                         Object value,
-                                         Instant createdTimestamp,
-                                         Instant lastUpdatedTimestamp) {
+    public EntryOperationSuccessMessage(String id,
+                                        String key,
+                                        EntryValueType valueType,
+                                        Object value,
+                                        Instant createdTimestamp,
+                                        Instant lastUpdatedTimestamp) {
         this.id = checkNotNull(id, "id");
         this.key = checkNotNull(key, "key");
         this.valueType = checkNotNull(valueType, "valueType");
@@ -34,7 +34,7 @@ public class EntityOperationSuccessMessage implements EntityMessage {
 
     @Override
     public MessageCode messageCode() {
-        return MessageCode.ENTITY_OPERATION_SUCCESS;
+        return MessageCode.ENTRY_OPERATION_SUCCESS;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class EntityOperationSuccessMessage implements EntityMessage {
         return key;
     }
 
-    public EntityValueType valueType() {
+    public EntryValueType valueType() {
         return valueType;
     }
 

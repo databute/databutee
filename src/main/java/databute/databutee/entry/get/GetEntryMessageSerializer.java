@@ -6,15 +6,15 @@ import databute.databutee.network.packet.Packet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GetEntityMessageSerializer implements MessageSerializer<GetEntityMessage> {
+public class GetEntryMessageSerializer implements MessageSerializer<GetEntryMessage> {
 
     @Override
-    public Packet serialize(GetEntityMessage getEntityMessage) {
-        checkNotNull(getEntityMessage, "getEntityMessage");
+    public Packet serialize(GetEntryMessage getEntryMessage) {
+        checkNotNull(getEntryMessage, "getEntryMessage");
 
         final Packet packet = new BufferedPacket();
-        packet.writeString(getEntityMessage.id());
-        packet.writeString(getEntityMessage.key());
+        packet.writeString(getEntryMessage.id());
+        packet.writeString(getEntryMessage.key());
         return packet;
     }
 }

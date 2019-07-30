@@ -1,9 +1,9 @@
 package databute.databutee.entry.set;
 
 import com.google.common.base.MoreObjects;
-import databute.databutee.entry.EntityKey;
-import databute.databutee.entry.EntityMessage;
-import databute.databutee.entry.EntityValueType;
+import databute.databutee.entry.EntryKey;
+import databute.databutee.entry.EntryMessage;
+import databute.databutee.entry.EntryValueType;
 import databute.databutee.network.message.MessageCode;
 
 import java.util.List;
@@ -13,38 +13,38 @@ import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class SetEntityMessage implements EntityMessage {
+public class SetEntryMessage implements EntryMessage {
 
-    public static SetEntityMessage setInteger(EntityKey key, Integer integerValue) {
-        return new SetEntityMessage(key, EntityValueType.INTEGER, integerValue);
+    public static SetEntryMessage setInteger(EntryKey key, Integer integerValue) {
+        return new SetEntryMessage(key, EntryValueType.INTEGER, integerValue);
     }
 
-    public static SetEntityMessage setLong(EntityKey key, Long longValue) {
-        return new SetEntityMessage(key, EntityValueType.LONG, longValue);
+    public static SetEntryMessage setLong(EntryKey key, Long longValue) {
+        return new SetEntryMessage(key, EntryValueType.LONG, longValue);
     }
 
-    public static SetEntityMessage setString(EntityKey key, String stringValue) {
-        return new SetEntityMessage(key, EntityValueType.STRING, stringValue);
+    public static SetEntryMessage setString(EntryKey key, String stringValue) {
+        return new SetEntryMessage(key, EntryValueType.STRING, stringValue);
     }
 
-    public static SetEntityMessage setList(EntityKey key, List<String> listValue) {
-        return new SetEntityMessage(key, EntityValueType.LIST, listValue);
+    public static SetEntryMessage setList(EntryKey key, List<String> listValue) {
+        return new SetEntryMessage(key, EntryValueType.LIST, listValue);
     }
 
-    public static SetEntityMessage setSet(EntityKey key, Set<String> setValue) {
-        return new SetEntityMessage(key, EntityValueType.SET, setValue);
+    public static SetEntryMessage setSet(EntryKey key, Set<String> setValue) {
+        return new SetEntryMessage(key, EntryValueType.SET, setValue);
     }
 
-    public static SetEntityMessage setDictionary(EntityKey key, Map<String, String> dictionaryValue) {
-        return new SetEntityMessage(key, EntityValueType.DICTIONARY, dictionaryValue);
+    public static SetEntryMessage setDictionary(EntryKey key, Map<String, String> dictionaryValue) {
+        return new SetEntryMessage(key, EntryValueType.DICTIONARY, dictionaryValue);
     }
 
     private final String id;
-    private final EntityKey key;
-    private final EntityValueType valueType;
+    private final EntryKey key;
+    private final EntryValueType valueType;
     private final Object value;
 
-    public SetEntityMessage(EntityKey key, EntityValueType valueType, Object value) {
+    public SetEntryMessage(EntryKey key, EntryValueType valueType, Object value) {
         this.id = UUID.randomUUID().toString();
         this.key = checkNotNull(key, "key");
         this.valueType = checkNotNull(valueType, "valueType");
@@ -53,7 +53,7 @@ public class SetEntityMessage implements EntityMessage {
 
     @Override
     public MessageCode messageCode() {
-        return MessageCode.SET_ENTITY;
+        return MessageCode.SET_ENTRY;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SetEntityMessage implements EntityMessage {
         return key.key();
     }
 
-    public EntityValueType valueType() {
+    public EntryValueType valueType() {
         return valueType;
     }
 

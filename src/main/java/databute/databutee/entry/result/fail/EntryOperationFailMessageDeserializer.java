@@ -5,15 +5,15 @@ import databute.databutee.network.packet.Packet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntityOperationFailMessageDeserializer implements MessageDeserializer<EntityOperationFailMessage> {
+public class EntryOperationFailMessageDeserializer implements MessageDeserializer<EntryOperationFailMessage> {
 
     @Override
-    public EntityOperationFailMessage deserialize(Packet packet) {
+    public EntryOperationFailMessage deserialize(Packet packet) {
         checkNotNull(packet, "packet");
 
         final String id = packet.readString();
         final String key = packet.readString();
-        final EntityOperationErrorCode errorCode = EntityOperationErrorCode.valueOf(packet.readString());
-        return new EntityOperationFailMessage(id, key, errorCode);
+        final EntryOperationErrorCode errorCode = EntryOperationErrorCode.valueOf(packet.readString());
+        return new EntryOperationFailMessage(id, key, errorCode);
     }
 }

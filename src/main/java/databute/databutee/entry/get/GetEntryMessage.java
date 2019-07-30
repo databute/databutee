@@ -1,27 +1,27 @@
 package databute.databutee.entry.get;
 
 import com.google.common.base.MoreObjects;
-import databute.databutee.entry.EntityKey;
-import databute.databutee.entry.EntityMessage;
+import databute.databutee.entry.EntryKey;
+import databute.databutee.entry.EntryMessage;
 import databute.databutee.network.message.MessageCode;
 
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GetEntityMessage implements EntityMessage {
+public class GetEntryMessage implements EntryMessage {
 
     private final String id;
-    private final EntityKey key;
+    private final EntryKey key;
 
-    public GetEntityMessage(EntityKey key) {
+    public GetEntryMessage(EntryKey key) {
         this.id = UUID.randomUUID().toString();
         this.key = checkNotNull(key, "key");
     }
 
     @Override
     public MessageCode messageCode() {
-        return MessageCode.GET_ENTITY;
+        return MessageCode.GET_ENTRY;
     }
 
     @Override

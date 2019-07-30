@@ -3,7 +3,7 @@ package databute.databutee.entry.result.success;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import databute.databutee.entry.EntityValueType;
+import databute.databutee.entry.EntryValueType;
 import databute.databutee.entry.UnsupportedValueTypeException;
 import databute.databutee.network.message.MessageDeserializer;
 import databute.databutee.network.packet.Packet;
@@ -15,15 +15,15 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntityOperationSuccessMessageDeserializer implements MessageDeserializer<EntityOperationSuccessMessage> {
+public class EntryOperationSuccessMessageDeserializer implements MessageDeserializer<EntryOperationSuccessMessage> {
 
     @Override
-    public EntityOperationSuccessMessage deserialize(Packet packet) {
+    public EntryOperationSuccessMessage deserialize(Packet packet) {
         checkNotNull(packet, "packet");
 
         final String id = packet.readString();
         final String key = packet.readString();
-        final EntityValueType valueType = EntityValueType.valueOf(packet.readString());
+        final EntryValueType valueType = EntryValueType.valueOf(packet.readString());
         Object value = null;
         switch (valueType) {
             case INTEGER: {
@@ -55,7 +55,7 @@ public class EntityOperationSuccessMessageDeserializer implements MessageDeseria
         }
         final Instant createdTimestamp = Instant.ofEpochMilli(packet.readLong());
         final Instant lastUpdatedTimestamp = Instant.ofEpochMilli(packet.readLong());
-        return new EntityOperationSuccessMessage(id, key, valueType, value, createdTimestamp, lastUpdatedTimestamp);
+        return new EntryOperationSuccessMessage(id, key, valueType, value, createdTimestamp, lastUpdatedTimestamp);
     }
 
     private Integer deserializeIntegerValue(Packet packet) {
