@@ -6,15 +6,15 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 import databute.databutee.bucket.Bucket;
 import databute.databutee.bucket.BucketGroup;
-import databute.databutee.entity.EmptyEntityKeyException;
-import databute.databutee.entity.EntityKey;
-import databute.databutee.entity.EntityMessage;
-import databute.databutee.entity.UnsupportedValueTypeException;
-import databute.databutee.entity.delete.DeleteEntityMessage;
-import databute.databutee.entity.expire.ExpireEntityMessage;
-import databute.databutee.entity.get.GetEntityMessage;
-import databute.databutee.entity.set.SetEntityMessage;
-import databute.databutee.entity.update.UpdateEntityMessage;
+import databute.databutee.entry.EmptyEntryKeyException;
+import databute.databutee.entry.EntryKey;
+import databute.databutee.entry.EntryMessage;
+import databute.databutee.entry.UnsupportedValueTypeException;
+import databute.databutee.entry.delete.DeleteEntryMessage;
+import databute.databutee.entry.expire.ExpireEntryMessage;
+import databute.databutee.entry.get.GetEntryMessage;
+import databute.databutee.entry.set.SetEntryMessage;
+import databute.databutee.entry.update.UpdateEntryMessage;
 import databute.databutee.network.DatabuterSession;
 import databute.databutee.network.DatabuterSessionConnector;
 import databute.databutee.network.register.RegisterMessage;
@@ -88,16 +88,16 @@ public class Databutee {
         throw new ConnectException();
     }
 
-    public void get(String key, Callback callback) throws EmptyEntityKeyException {
+    public void get(String key, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final GetEntityMessage getEntityMessage = new GetEntityMessage(entityKey);
-        sendEntityMessage(getEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final GetEntryMessage getEntryMessage = new GetEntryMessage(entryKey);
+        sendEntryMessage(getEntryMessage, callback);
     }
 
-    public void set(String key, Object value, Callback callback) throws EmptyEntityKeyException {
+    public void set(String key, Object value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
@@ -116,67 +116,67 @@ public class Databutee {
         }
     }
 
-    public void setInteger(String key, Integer value, Callback callback) throws EmptyEntityKeyException {
+    public void setInteger(String key, Integer value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setInteger(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setInteger(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void setLong(String key, Long value, Callback callback) throws EmptyEntityKeyException {
+    public void setLong(String key, Long value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setLong(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setLong(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void setString(String key, String value, Callback callback) throws EmptyEntityKeyException {
+    public void setString(String key, String value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setString(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setString(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void setList(String key, List<String> value, Callback callback) throws EmptyEntityKeyException {
+    public void setList(String key, List<String> value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setList(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setList(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void setSet(String key, Set<String> value, Callback callback) throws EmptyEntityKeyException {
+    public void setSet(String key, Set<String> value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setSet(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setSet(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void setDictionary(String key, Map<String, String> value, Callback callback) throws EmptyEntityKeyException {
+    public void setDictionary(String key, Map<String, String> value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final SetEntityMessage setEntityMessage = SetEntityMessage.setDictionary(entityKey, value);
-        sendEntityMessage(setEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final SetEntryMessage setEntryMessage = SetEntryMessage.setDictionary(entryKey, value);
+        sendEntryMessage(setEntryMessage, callback);
     }
 
-    public void update(String key, Object value, Callback callback) throws EmptyEntityKeyException {
+    public void update(String key, Object value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
@@ -196,88 +196,88 @@ public class Databutee {
         }
     }
 
-    public void updateInteger(String key, Integer value, Callback callback) throws EmptyEntityKeyException {
+    public void updateInteger(String key, Integer value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateInteger(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateInteger(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
-    public void updateLong(String key, Long value, Callback callback) throws EmptyEntityKeyException {
+    public void updateLong(String key, Long value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateLong(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateLong(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
-    public void updateString(String key, String value, Callback callback) throws EmptyEntityKeyException {
+    public void updateString(String key, String value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateString(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateString(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
-    public void updateList(String key, List<String> value, Callback callback) throws EmptyEntityKeyException {
+    public void updateList(String key, List<String> value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateList(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateList(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
-    public void updateSet(String key, Set<String> value, Callback callback) throws EmptyEntityKeyException {
+    public void updateSet(String key, Set<String> value, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateSet(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateSet(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
     public void updateDictionary(String key, Map<String, String> value, Callback callback)
-            throws EmptyEntityKeyException {
+            throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(value, "value");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final UpdateEntityMessage updateEntityMessage = UpdateEntityMessage.updateDictionary(entityKey, value);
-        sendEntityMessage(updateEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final UpdateEntryMessage updateEntryMessage = UpdateEntryMessage.updateDictionary(entryKey, value);
+        sendEntryMessage(updateEntryMessage, callback);
     }
 
-    public void delete(String key, Callback callback) throws EmptyEntityKeyException {
+    public void delete(String key, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final DeleteEntityMessage deleteEntityMessage = new DeleteEntityMessage(entityKey);
-        sendEntityMessage(deleteEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final DeleteEntryMessage deleteEntryMessage = new DeleteEntryMessage(entryKey);
+        sendEntryMessage(deleteEntryMessage, callback);
     }
 
-    public void expire(String key, Instant expireAt, Callback callback) throws EmptyEntityKeyException {
+    public void expire(String key, Instant expireAt, Callback callback) throws EmptyEntryKeyException {
         checkNotNull(key, "key");
         checkNotNull(callback, "callback");
 
-        final EntityKey entityKey = new EntityKey(key);
-        final ExpireEntityMessage expireEntityMessage = new ExpireEntityMessage(entityKey, expireAt);
-        sendEntityMessage(expireEntityMessage, callback);
+        final EntryKey entryKey = new EntryKey(key);
+        final ExpireEntryMessage expireEntryMessage = new ExpireEntryMessage(entryKey, expireAt);
+        sendEntryMessage(expireEntryMessage, callback);
     }
 
-    private void sendEntityMessage(EntityMessage entityMessage, Callback callback) {
+    private void sendEntryMessage(EntryMessage entryMessage, Callback callback) {
         final int count = bucketGroup.count();
-        final HashCode hashKey = Hashing.crc32().hashString(entityMessage.key(), StandardCharsets.UTF_8);
+        final HashCode hashKey = Hashing.crc32().hashString(entryMessage.key(), StandardCharsets.UTF_8);
         final int keyFactor = Hashing.consistentHash(hashKey, count);
         final Bucket bucket = bucketGroup.findByKeyFactor(keyFactor);
         if (bucket == null) {
@@ -285,14 +285,14 @@ public class Databutee {
         } else {
             final DatabuterNode activeNode = bucket.activeNode();
             if (activeNode != null) {
-                dispatcher.enqueue(entityMessage.id(), callback);
-                activeNode.session().send(entityMessage);
+                dispatcher.enqueue(entryMessage.id(), callback);
+                activeNode.session().send(entryMessage);
                 logger.debug("keyFactor: {}, bucket: {}, active node: {}", keyFactor, bucket.id(), activeNode.id());
             } else {
                 final DatabuterNode standbyNode = bucket.standbyNode();
                 if (standbyNode != null) {
-                    dispatcher.enqueue(entityMessage.id(), callback);
-                    standbyNode.session().send(entityMessage);
+                    dispatcher.enqueue(entryMessage.id(), callback);
+                    standbyNode.session().send(entryMessage);
                     logger.debug("keyFactor: {}, bucket: {}, standby node: {}", keyFactor, bucket.id(), standbyNode.id());
                 } else {
                     logger.error("Bucket {} does not assigned to any node.", bucket.id());

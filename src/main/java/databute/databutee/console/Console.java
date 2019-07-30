@@ -7,8 +7,8 @@ import databute.databutee.Databutee;
 import databute.databutee.DatabuteeConfiguration;
 import databute.databutee.DatabuteeConstants;
 import databute.databutee.bucket.Bucket;
-import databute.databutee.entity.EmptyEntityKeyException;
-import databute.databutee.entity.Entity;
+import databute.databutee.entry.EmptyEntryKeyException;
+import databute.databutee.entry.Entry;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.lang3.StringUtils;
@@ -111,8 +111,8 @@ public final class Console {
                     try {
                         databutee.get(key, new Callback() {
                             @Override
-                            public void onSuccess(Entity entity) {
-                                terminal.writer().println(entity.toString());
+                            public void onSuccess(Entry entry) {
+                                terminal.writer().println(entry.toString());
                             }
 
                             @Override
@@ -120,7 +120,7 @@ public final class Console {
                                 terminal.writer().println(e.toString());
                             }
                         });
-                    } catch (EmptyEntityKeyException e) {
+                    } catch (EmptyEntryKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
                 }
@@ -136,8 +136,8 @@ public final class Console {
                         try {
                             databutee.setInteger(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -145,7 +145,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "long")) {
@@ -154,8 +154,8 @@ public final class Console {
                         try {
                             databutee.setLong(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -163,7 +163,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "string")) {
@@ -172,8 +172,8 @@ public final class Console {
                         try {
                             databutee.setString(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -181,7 +181,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "list")) {
@@ -190,8 +190,8 @@ public final class Console {
                         try {
                             databutee.setList(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -199,7 +199,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "set")) {
@@ -209,8 +209,8 @@ public final class Console {
                         try {
                             databutee.setSet(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -218,7 +218,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "dict")) {
@@ -236,8 +236,8 @@ public final class Console {
                         try {
                             databutee.setDictionary(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -245,7 +245,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     }
@@ -262,8 +262,8 @@ public final class Console {
                         try {
                             databutee.updateInteger(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -271,7 +271,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "long")) {
@@ -280,8 +280,8 @@ public final class Console {
                         try {
                             databutee.updateLong(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -289,7 +289,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "string")) {
@@ -298,8 +298,8 @@ public final class Console {
                         try {
                             databutee.updateString(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -307,7 +307,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "list")) {
@@ -316,8 +316,8 @@ public final class Console {
                         try {
                             databutee.updateList(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -325,7 +325,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "set")) {
@@ -335,8 +335,8 @@ public final class Console {
                         try {
                             databutee.updateSet(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -344,7 +344,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     } else if (StringUtils.equals(type, "dict")) {
@@ -364,8 +364,8 @@ public final class Console {
                         try {
                             databutee.updateDictionary(key, value, new Callback() {
                                 @Override
-                                public void onSuccess(Entity entity) {
-                                    terminal.writer().println(entity.toString());
+                                public void onSuccess(Entry entry) {
+                                    terminal.writer().println(entry.toString());
                                 }
 
                                 @Override
@@ -373,7 +373,7 @@ public final class Console {
                                     terminal.writer().println(e.toString());
                                 }
                             });
-                        } catch (EmptyEntityKeyException e) {
+                        } catch (EmptyEntryKeyException e) {
                             terminal.writer().println("key must not be empty.");
                         }
                     }
@@ -386,8 +386,8 @@ public final class Console {
                     try {
                         databutee.delete(key, new Callback() {
                             @Override
-                            public void onSuccess(Entity entity) {
-                                terminal.writer().println(entity.toString());
+                            public void onSuccess(Entry entry) {
+                                terminal.writer().println(entry.toString());
                             }
 
                             @Override
@@ -395,7 +395,7 @@ public final class Console {
                                 terminal.writer().println(e.toString());
                             }
                         });
-                    } catch (EmptyEntityKeyException e) {
+                    } catch (EmptyEntryKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
                 }
@@ -409,8 +409,8 @@ public final class Console {
                     try {
                         databutee.expire(key, expireAt, new Callback() {
                             @Override
-                            public void onSuccess(Entity entity) {
-                                terminal.writer().println(entity.toString());
+                            public void onSuccess(Entry entry) {
+                                terminal.writer().println(entry.toString());
                             }
 
                             @Override
@@ -418,7 +418,7 @@ public final class Console {
                                 terminal.writer().println(e.toString());
                             }
                         });
-                    } catch (EmptyEntityKeyException e) {
+                    } catch (EmptyEntryKeyException e) {
                         terminal.writer().println("key must not be empty.");
                     }
                 }

@@ -3,13 +3,13 @@ package databute.databutee.network;
 import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
-import databute.databutee.entity.delete.DeleteEntityMessageSerializer;
-import databute.databutee.entity.expire.ExpireEntityMessageSerializer;
-import databute.databutee.entity.get.GetEntityMessageSerializer;
-import databute.databutee.entity.result.fail.EntityOperationFailMessageDeserializer;
-import databute.databutee.entity.result.success.EntityOperationSuccessMessageDeserializer;
-import databute.databutee.entity.set.SetEntityMessageSerializer;
-import databute.databutee.entity.update.UpdateEntityMessageSerializer;
+import databute.databutee.entry.delete.DeleteEntryMessageSerializer;
+import databute.databutee.entry.expire.ExpireEntryMessageSerializer;
+import databute.databutee.entry.get.GetEntryMessageSerializer;
+import databute.databutee.entry.result.fail.EntryOperationFailMessageDeserializer;
+import databute.databutee.entry.result.success.EntryOperationSuccessMessageDeserializer;
+import databute.databutee.entry.set.SetEntryMessageSerializer;
+import databute.databutee.entry.update.UpdateEntryMessageSerializer;
 import databute.databutee.network.message.MessageCode;
 import databute.databutee.network.message.MessageCodeResolver;
 import databute.databutee.network.message.MessageDeserializer;
@@ -53,17 +53,17 @@ public class DatabuterSessionConnector {
 
         this.serializers = Maps.newHashMap();
         this.serializers.put(MessageCode.REGISTER, new RegisterMessageSerializer());
-        this.serializers.put(MessageCode.GET_ENTITY, new GetEntityMessageSerializer());
-        this.serializers.put(MessageCode.SET_ENTITY, new SetEntityMessageSerializer());
-        this.serializers.put(MessageCode.UPDATE_ENTITY, new UpdateEntityMessageSerializer());
-        this.serializers.put(MessageCode.DELETE_ENTITY, new DeleteEntityMessageSerializer());
-        this.serializers.put(MessageCode.EXPIRE_ENTITY, new ExpireEntityMessageSerializer());
+        this.serializers.put(MessageCode.GET_ENTRY, new GetEntryMessageSerializer());
+        this.serializers.put(MessageCode.SET_ENTRY, new SetEntryMessageSerializer());
+        this.serializers.put(MessageCode.UPDATE_ENTRY, new UpdateEntryMessageSerializer());
+        this.serializers.put(MessageCode.DELETE_ENTRY, new DeleteEntryMessageSerializer());
+        this.serializers.put(MessageCode.EXPIRE_ENTRY, new ExpireEntryMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());
         this.deserializers.put(MessageCode.BUCKET_NOTIFICATION, new BucketNotificationMessageDeserializer());
-        this.deserializers.put(MessageCode.ENTITY_OPERATION_SUCCESS, new EntityOperationSuccessMessageDeserializer());
-        this.deserializers.put(MessageCode.ENTITY_OPERATION_FAIL, new EntityOperationFailMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTRY_OPERATION_SUCCESS, new EntryOperationSuccessMessageDeserializer());
+        this.deserializers.put(MessageCode.ENTRY_OPERATION_FAIL, new EntryOperationFailMessageDeserializer());
     }
 
     public InetSocketAddress remoteAddress() {
