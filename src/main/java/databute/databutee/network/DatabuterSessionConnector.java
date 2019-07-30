@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import databute.databutee.Databutee;
 import databute.databutee.bucket.notification.BucketNotificationMessageDeserializer;
 import databute.databutee.entity.delete.DeleteEntityMessageSerializer;
+import databute.databutee.entity.expire.ExpireEntityMessageSerializer;
 import databute.databutee.entity.get.GetEntityMessageSerializer;
 import databute.databutee.entity.result.fail.EntityOperationFailMessageDeserializer;
 import databute.databutee.entity.result.success.EntityOperationSuccessMessageDeserializer;
@@ -56,6 +57,7 @@ public class DatabuterSessionConnector {
         this.serializers.put(MessageCode.SET_ENTITY, new SetEntityMessageSerializer());
         this.serializers.put(MessageCode.UPDATE_ENTITY, new UpdateEntityMessageSerializer());
         this.serializers.put(MessageCode.DELETE_ENTITY, new DeleteEntityMessageSerializer());
+        this.serializers.put(MessageCode.EXPIRE_ENTITY, new ExpireEntityMessageSerializer());
 
         this.deserializers = Maps.newHashMap();
         this.deserializers.put(MessageCode.NODE_NOTIFICATION, new NodeNotificationMessageDeserializer());

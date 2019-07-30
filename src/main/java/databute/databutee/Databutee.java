@@ -11,6 +11,7 @@ import databute.databutee.entity.EntityKey;
 import databute.databutee.entity.EntityMessage;
 import databute.databutee.entity.UnsupportedValueTypeException;
 import databute.databutee.entity.delete.DeleteEntityMessage;
+import databute.databutee.entity.expire.ExpireEntityMessage;
 import databute.databutee.entity.get.GetEntityMessage;
 import databute.databutee.entity.set.SetEntityMessage;
 import databute.databutee.entity.update.UpdateEntityMessage;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -262,6 +264,15 @@ public class Databutee {
         final EntityKey entityKey = new EntityKey(key);
         final DeleteEntityMessage deleteEntityMessage = new DeleteEntityMessage(entityKey);
         sendEntityMessage(deleteEntityMessage, callback);
+    }
+
+    public void expire(String key, Instant expireAt, Callback callback) throws EmptyEntityKeyException {
+        checkNotNull(key, "key");
+        checkNotNull(callback, "callback");
+
+        final EntityKey entityKey = new EntityKey(key);
+        final ExpireEntityMessage expireEntityMessage = new ExpireEntityMessage(entityKey, expireAt);
+        sendEntityMessage(expireEntityMessage, callback);
     }
 
     private void sendEntityMessage(EntityMessage entityMessage, Callback callback) {
