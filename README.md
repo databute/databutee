@@ -1,5 +1,16 @@
 # databutee
 
+Databutee는 분산 인 메모리 키 - 값 스토어의 클라이언트 구현체이다.
+
+## Usage
+
+```
+gradlew jar
+java -jar build/libs/databutee-{version}.jar
+```
+
+## License
+
 ```
 MIT License
 
